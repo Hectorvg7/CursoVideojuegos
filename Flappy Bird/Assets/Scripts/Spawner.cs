@@ -31,7 +31,7 @@ public class Spawner : MonoBehaviour
         }
     }
 
-    void SpawnTuberia()
+    public void SpawnTuberia()
     {
         float alturaSuperior = Random.Range(rangoYMin, rangoYMax);
         float alturaInferior = alturaSuperior - Random.Range(huecoMinimo, huecoMaximo);

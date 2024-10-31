@@ -88,4 +88,13 @@ public class Scroller : MonoBehaviour
             Destroy(tuberia.gameObject);
         }
     }
+
+    public void ReiniciarTuberias()
+    {
+        foreach (Transform tuberia in tuberias)
+        {
+            Destroy(tuberia.gameObject);
+        }
+        tuberias.Clear();
+    }
 }

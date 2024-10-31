@@ -22,8 +22,7 @@ public class Ball : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            speed += 1;
-            rb.velocity = rb.velocity.normalized * speed;
+            rb.velocity = rb.velocity * 1.1f;
         }else if (collision.gameObject.CompareTag("Field"))
         {
             GetComponent<AudioSource>().Play();
