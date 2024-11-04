@@ -12,6 +12,7 @@ public class Bird : MonoBehaviour
     public AudioClip salto;
     public float fuerzaSalto = 7f;
     public float alturaMaxima = 5f;
+    private float velocidadRotacion = 10f;
     private Rigidbody2D rb;
     private GameManager gm;
     // Start is called before the first frame update
@@ -32,6 +33,7 @@ public class Bird : MonoBehaviour
     {
         Saltar();
         LimitarAltura();
+        RotarPajaro();
     }
 
     private void Saltar()
@@ -52,13 +54,26 @@ public class Bird : MonoBehaviour
         }
     }
 
+    private void RotarPajaro()
+    {
+         // Obtener la velocidad en el eje Y
+        float verticalVelocity = rb.velocity.y;
+
+        // Calcular la rotación basada en la velocidad vertical
+        float targetRotationZ = Mathf.Clamp(verticalVelocity * velocidadRotacion, -45f, 45f);
+        
+        // Aplicar la rotación al pájaro
+        Quaternion targetRotation = Quaternion.Euler(0, 0, targetRotationZ);
+        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * velocidadRotacion);
+    
+    }
+
     private void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.gameObject.CompareTag("Tuberia") || collider.gameObject.CompareTag("Suelo"))
         {
             gm.MostrarGameOver(gm.puntos);
             audioColision.Play();
-            Destroy(gameObject, colision.length);
         }
     }
 

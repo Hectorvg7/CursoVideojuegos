@@ -13,8 +13,10 @@ public class GameManager : MonoBehaviour
     public GameObject inicio;
     public GameObject puntuacion;
     public GameObject bird;
+    private GameObject birdActual;
     public GameObject medalla;
     public GameObject panelGameOver;
+    public GameObject botonSalir;
     public TextMeshProUGUI textoGameOver;
     public Transform medallasContainer;
     public Scroller scroller;
@@ -29,6 +31,8 @@ public class GameManager : MonoBehaviour
         pausa.SetActive(false);
         puntuacion.SetActive(false);
         inicio.SetActive(true);
+        botonSalir.SetActive(false);
+        birdActual = Instantiate(bird);
         Time.timeScale = 0f;
     }
 
@@ -66,6 +70,7 @@ public class GameManager : MonoBehaviour
     {
         if (isPaused)
         {
+            botonSalir.SetActive(true);
             inicio.SetActive(false);
             bird.SetActive(true);
             puntuacion.SetActive(true);
@@ -74,19 +79,29 @@ public class GameManager : MonoBehaviour
         }
         if (isGameOver)
         {
-            Instantiate(bird);
+            ReiniciarJuego();
+        }
+    }
+
+    void ReiniciarJuego()
+    {
+        if (birdActual != null)
+        {
+            Destroy(birdActual);
+        }
+
+            birdActual = Instantiate(bird);
             scroller.ReiniciarTuberias();
             panelGameOver.SetActive(false);
             puntos = 0;
             puntuacion.GetComponent<TextMeshProUGUI>().text = "0";
+
             foreach (Transform child in medallasContainer)
-            {
-                Destroy(child.gameObject);
-            }
+            {Destroy(child.gameObject);}
+
             inicio.SetActive(true);
             isPaused = true;
             isGameOver = false;
-        }
     }
 
     public void IncrementarPuntuacion()
