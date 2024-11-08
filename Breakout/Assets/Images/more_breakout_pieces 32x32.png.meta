@@ -1,0 +1,288 @@
+fileFormatVersion: 2
+guid: a395a5f157f41cf3f8b2ce5aa43738aa
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: more_breakout_pieces 32x32_0
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 624
+        width: 48
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: acad48e5a50cf37dcae6601c04f8139b
+      internalID: -1017743164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: more_breakout_pieces 32x32_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 656
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a1e85945200dac0e5b57903bb3fb57b7
+      internalID: -1097980454
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: more_breakout_pieces 32x32_3
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 592
+        width: 48
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 11b08638eb1949534a8eecdc14a149b1
+      internalID: 312874630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: more_breakout_pieces 32x32_4
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 721
+        width: 48
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1aaa768d279cfe943a38ed3fb09c3284
+      internalID: 1238983867
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: more_breakout_pieces 32x32_17
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 688
+        width: 48
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c1a63ed90b2075b66a83a46dfb00071b
+      internalID: -915441987
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      more_breakout_pieces 32x32_0: -1017743164
+      more_breakout_pieces 32x32_1: 291580250
+      more_breakout_pieces 32x32_10: 1046857551
+      more_breakout_pieces 32x32_11: -639298878
+      more_breakout_pieces 32x32_12: 74825369
+      more_breakout_pieces 32x32_13: 201162185
+      more_breakout_pieces 32x32_14: -1275342171
+      more_breakout_pieces 32x32_15: -1885721013
+      more_breakout_pieces 32x32_16: 675672450
+      more_breakout_pieces 32x32_17: -915441987
+      more_breakout_pieces 32x32_18: 836377326
+      more_breakout_pieces 32x32_19: 596093592
+      more_breakout_pieces 32x32_2: -1097980454
+      more_breakout_pieces 32x32_20: 593114670
+      more_breakout_pieces 32x32_21: -1118901794
+      more_breakout_pieces 32x32_22: 1692880296
+      more_breakout_pieces 32x32_23: 947812233
+      more_breakout_pieces 32x32_24: 1941179265
+      more_breakout_pieces 32x32_25: -1657241395
+      more_breakout_pieces 32x32_26: 1321723098
+      more_breakout_pieces 32x32_27: -1904668371
+      more_breakout_pieces 32x32_28: 860266835
+      more_breakout_pieces 32x32_29: 1794725036
+      more_breakout_pieces 32x32_3: 312874630
+      more_breakout_pieces 32x32_30: 1121445411
+      more_breakout_pieces 32x32_31: 352502304
+      more_breakout_pieces 32x32_32: -1499329273
+      more_breakout_pieces 32x32_33: -1485420811
+      more_breakout_pieces 32x32_34: -79134243
+      more_breakout_pieces 32x32_35: -943863562
+      more_breakout_pieces 32x32_36: -1039817
+      more_breakout_pieces 32x32_37: -560088452
+      more_breakout_pieces 32x32_38: -1444228554
+      more_breakout_pieces 32x32_39: 362908423
+      more_breakout_pieces 32x32_4: 1238983867
+      more_breakout_pieces 32x32_40: 1737884845
+      more_breakout_pieces 32x32_41: 1924295119
+      more_breakout_pieces 32x32_42: -1252152970
+      more_breakout_pieces 32x32_43: 1728754234
+      more_breakout_pieces 32x32_44: 594028848
+      more_breakout_pieces 32x32_45: -416402531
+      more_breakout_pieces 32x32_46: -1971226160
+      more_breakout_pieces 32x32_47: -2083650161
+      more_breakout_pieces 32x32_48: -447050142
+      more_breakout_pieces 32x32_49: -784601062
+      more_breakout_pieces 32x32_5: -121117889
+      more_breakout_pieces 32x32_50: -747226001
+      more_breakout_pieces 32x32_51: -1552987992
+      more_breakout_pieces 32x32_52: -1313012464
+      more_breakout_pieces 32x32_53: -790393710
+      more_breakout_pieces 32x32_54: 1572569653
+      more_breakout_pieces 32x32_55: -1439596269
+      more_breakout_pieces 32x32_6: -1104571897
+      more_breakout_pieces 32x32_7: 434360043
+      more_breakout_pieces 32x32_8: -1673857665
+      more_breakout_pieces 32x32_9: -333183398
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
