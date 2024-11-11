@@ -6,6 +6,7 @@ public class Bola : MonoBehaviour
 {
     [SerializeField] float velocidadVertical;
     [SerializeField] float velocidadHorizontal;
+    private float velocidadMinima = 3f;
     private float direccionX;
     private bool enJuego = false;
     public Transform pala;
@@ -51,5 +52,15 @@ public class Bola : MonoBehaviour
     {
         enJuego = false;
         transform.position = posicionInicial;
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        
+        if (rb.velocity.magnitude < velocidadMinima)
+        {
+            rb.velocity = new Vector2(rb.velocity.x * velocidadMinima, rb.velocity.y * velocidadMinima);
+        }
     }
 }

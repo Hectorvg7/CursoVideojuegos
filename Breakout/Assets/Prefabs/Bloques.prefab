@@ -148,6 +148,11 @@ MonoBehaviour:
   vida2: {fileID: -915441987, guid: a395a5f157f41cf3f8b2ce5aa43738aa, type: 3}
   vida3: {fileID: -1017743164, guid: a395a5f157f41cf3f8b2ce5aa43738aa, type: 3}
   vida4: {fileID: 312874630, guid: a395a5f157f41cf3f8b2ce5aa43738aa, type: 3}
+  powerUps:
+  - {fileID: 6475337191379119206, guid: d0c9788c369d91c6ba727a9e6961af42, type: 3}
+  - {fileID: 5198528578689114717, guid: 2fd1e65835ebdd33c88096c5ac12fe5c, type: 3}
+  - {fileID: 6763670220875575873, guid: a03a4dfa4d542d0139c52f1760c60a04, type: 3}
+  powerChance: 0.2
 --- !u!1 &2707046897497977658
 GameObject:
   m_ObjectHideFlags: 0
@@ -296,6 +301,11 @@ MonoBehaviour:
   vida2: {fileID: -915441987, guid: a395a5f157f41cf3f8b2ce5aa43738aa, type: 3}
   vida3: {fileID: -1017743164, guid: a395a5f157f41cf3f8b2ce5aa43738aa, type: 3}
   vida4: {fileID: 312874630, guid: a395a5f157f41cf3f8b2ce5aa43738aa, type: 3}
+  powerUps:
+  - {fileID: 6475337191379119206, guid: d0c9788c369d91c6ba727a9e6961af42, type: 3}
+  - {fileID: 5198528578689114717, guid: 2fd1e65835ebdd33c88096c5ac12fe5c, type: 3}
+  - {fileID: 6763670220875575873, guid: a03a4dfa4d542d0139c52f1760c60a04, type: 3}
+  powerChance: 0.2
 --- !u!1 &6243258795519321556
 GameObject:
   m_ObjectHideFlags: 0
@@ -444,6 +454,11 @@ MonoBehaviour:
   vida2: {fileID: -915441987, guid: a395a5f157f41cf3f8b2ce5aa43738aa, type: 3}
   vida3: {fileID: -1017743164, guid: a395a5f157f41cf3f8b2ce5aa43738aa, type: 3}
   vida4: {fileID: 312874630, guid: a395a5f157f41cf3f8b2ce5aa43738aa, type: 3}
+  powerUps:
+  - {fileID: 6475337191379119206, guid: d0c9788c369d91c6ba727a9e6961af42, type: 3}
+  - {fileID: 5198528578689114717, guid: 2fd1e65835ebdd33c88096c5ac12fe5c, type: 3}
+  - {fileID: 6763670220875575873, guid: a03a4dfa4d542d0139c52f1760c60a04, type: 3}
+  powerChance: 0.2
 --- !u!1 &6298561553481048559
 GameObject:
   m_ObjectHideFlags: 0
@@ -608,7 +623,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.5, y: 0.46875}
+  m_Size: {x: 1.5, y: 0.5}
   m_EdgeRadius: 0
 --- !u!114 &3280638774481139843
 MonoBehaviour:
@@ -627,3 +642,8 @@ MonoBehaviour:
   vida2: {fileID: -915441987, guid: a395a5f157f41cf3f8b2ce5aa43738aa, type: 3}
   vida3: {fileID: -1017743164, guid: a395a5f157f41cf3f8b2ce5aa43738aa, type: 3}
   vida4: {fileID: 312874630, guid: a395a5f157f41cf3f8b2ce5aa43738aa, type: 3}
+  powerUps:
+  - {fileID: 6475337191379119206, guid: d0c9788c369d91c6ba727a9e6961af42, type: 3}
+  - {fileID: 5198528578689114717, guid: 2fd1e65835ebdd33c88096c5ac12fe5c, type: 3}
+  - {fileID: 6763670220875575873, guid: a03a4dfa4d542d0139c52f1760c60a04, type: 3}
+  powerChance: 0.2

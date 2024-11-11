@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AudioManager : Singleton<AudioManager>
+public class PowerUp : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
@@ -14,10 +14,5 @@ public class AudioManager : Singleton<AudioManager>
     void Update()
     {
         
-    }
-
-    public void PlaySound(AudioClip clip)
-    {
-        GetComponent<AudioSource>().PlayOneShot(clip);
     }
 }

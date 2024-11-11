@@ -11,7 +11,11 @@ public class Bloques : MonoBehaviour
     public Sprite vida2;
     public Sprite vida3;
     public Sprite vida4;
+    public GameObject[] powerUps;
+
+    public float powerChance = 0.2f;
     private SpriteRenderer sr;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,8 +30,21 @@ public class Bloques : MonoBehaviour
         ActualizarSprite();
         if (vidasRestantes <= 0)
         {
+            SoltarPowerUp();
             Destroy(gameObject);
         }
+    }
+
+    private void SoltarPowerUp()
+    {
+        if (Random.value <= powerChance)
+        {
+            int randomIndex = Random.Range(0, powerUps.Length);
+
+            Instantiate(powerUps[randomIndex], transform.position, Quaternion.identity);
+        }
+        
+        
     }
 
     void ActualizarSprite()
