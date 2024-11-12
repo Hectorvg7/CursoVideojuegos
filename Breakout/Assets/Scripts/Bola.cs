@@ -1,16 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Callbacks;
 using UnityEngine;
 
 public class Bola : MonoBehaviour
 {
     [SerializeField] float velocidadVertical;
     [SerializeField] float velocidadHorizontal;
-    private float velocidadMinima = 3f;
+    private float velocidadMinima = 4f;
     private float direccionX;
-    private bool enJuego = false;
     public Transform pala;
-    public GameObject panel;
     private Vector3 posicionInicial;
 
 
@@ -20,37 +20,31 @@ public class Bola : MonoBehaviour
     {
         posicionInicial = transform.position;
         direccionX = 0f;
-        panel.SetActive(true);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !enJuego)
-        {
-            LanzarBola();
-            panel.SetActive(false);
-        }
 
     }
 
-    void LanzarBola()
+    public void LanzarBola()
     {
         //Calcular velocidades y dirección del saque.
-        velocidadVertical = Random.Range(3, 6);
-        velocidadHorizontal = Random.Range(3, 6);
-        direccionX = Random.Range(0, 2) == 0 ? velocidadHorizontal : -velocidadHorizontal;
+        velocidadVertical = UnityEngine.Random.Range(4, 7);
+        velocidadHorizontal = UnityEngine.Random.Range(4, 7);
+        direccionX = UnityEngine.Random.Range(0, 2) == 0 ? velocidadHorizontal : -velocidadHorizontal;
 
         //Aplicar velocidades en el RigidBody2D.
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         rb.velocity = new Vector2(direccionX, velocidadVertical);
-        enJuego = true;
     }
 
 
     public void ResetearBola()
     {
-        enJuego = false;
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        rb.velocity = Vector2.zero;
         transform.position = posicionInicial;
     }
 
@@ -58,9 +52,14 @@ public class Bola : MonoBehaviour
     {
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         
-        if (rb.velocity.magnitude < velocidadMinima)
+        if (Math.Abs(rb.velocity.x) < velocidadMinima)
         {
-            rb.velocity = new Vector2(rb.velocity.x * velocidadMinima, rb.velocity.y * velocidadMinima);
+            rb.velocity = new Vector2(Math.Sign(rb.velocity.x) * velocidadMinima, rb.velocity.y);
+        }
+
+        if (Math.Abs(rb.velocity.y) < velocidadMinima)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, Math.Sign(rb.velocity.y) * velocidadMinima);
         }
     }
 }

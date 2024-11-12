@@ -12,7 +12,7 @@ public class Vidas : MonoBehaviour
     public GameObject corazon2;
     public GameObject corazon3;
 
-    private int vidasRestantes = 3;
+    public int vidasRestantes = 3;
 
     // Start is called before the first frame update
     void Start()

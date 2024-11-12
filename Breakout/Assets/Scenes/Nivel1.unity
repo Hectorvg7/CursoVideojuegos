@@ -247,6 +247,54 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a04abd32aea12a6d8b1d3a66692ab9b9, type: 3}
+--- !u!1 &233658419
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 233658421}
+  - component: {fileID: 233658420}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &233658420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 233658419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5df5e338bd17f7f10992abd7ad85f8a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pala: {fileID: 1322475838}
+  bola: {fileID: 1025430888}
+  vidas: {fileID: 830891214}
+  panel: {fileID: 1469651945}
+--- !u!4 &233658421
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 233658419}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &297148328
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -564,6 +612,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5c57b5889898ecb35a7c2c35e9dfd496, type: 3}
+--- !u!1 &830891214 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6688391152501581507, guid: 5aeea49f73171b788904ff6b06c428f8, type: 3}
+  m_PrefabInstance: {fileID: 3532622578234440587}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &862662063
 GameObject:
   m_ObjectHideFlags: 0
@@ -881,6 +934,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a04abd32aea12a6d8b1d3a66692ab9b9, type: 3}
+--- !u!1 &1025430888 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 378169156234455400, guid: f9ae99d3018d12293b2ddad2f6fb67c0, type: 3}
+  m_PrefabInstance: {fileID: 926265046}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1190547471
 GameObject:
   m_ObjectHideFlags: 0
@@ -969,6 +1027,11 @@ Transform:
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2262719733279899021, guid: 5aeea49f73171b788904ff6b06c428f8, type: 3}
   m_PrefabInstance: {fileID: 3532622578234440587}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1322475838 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 443203423647056230, guid: f5a5c33d853ef5cd5936365bd57afe53, type: 3}
+  m_PrefabInstance: {fileID: 6687674148635439899}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1469651945
 GameObject:
@@ -1248,6 +1311,10 @@ PrefabInstance:
       propertyPath: corazonRelleno
       value: 
       objectReference: {fileID: 332214223, guid: 9ac7dd760cd22525694c6269bfcee872, type: 3}
+    - target: {fileID: 8247066729290482671, guid: 87bbc97f4cd105e5a8ff8e606381335a, type: 3}
+      propertyPath: m_TagString
+      value: Suelo
+      objectReference: {fileID: 0}
     - target: {fileID: 8286585219360485564, guid: 87bbc97f4cd105e5a8ff8e606381335a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.1208148
@@ -1547,3 +1614,4 @@ SceneRoots:
   - {fileID: 129014447}
   - {fileID: 1022621142}
   - {fileID: 2128304889}
+  - {fileID: 233658421}
