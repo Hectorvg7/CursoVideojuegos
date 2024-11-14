@@ -13,6 +13,7 @@ public class Vidas : MonoBehaviour
     public GameObject corazon3;
 
     public int vidasRestantes = 3;
+    public AudioClip audioVida;
 
     // Start is called before the first frame update
     void Start()
@@ -69,7 +70,10 @@ public class Vidas : MonoBehaviour
         if (collision.gameObject.CompareTag("Bola"))
         {
             PerderVida();
+            Destroy(collision.gameObject);
             Debug.Log("Menos 1 vida");
+            AudioManager.Instance.PlaySound(audioVida);
+            GameManager.Instance.ReiniciarNivel();
         }
     }
 }

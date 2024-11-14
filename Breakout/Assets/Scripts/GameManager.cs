@@ -2,15 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
     public GameObject pala;
     public GameObject bola;
     public GameObject vidas;
     public GameObject panel;
+    public GameObject bolaNueva;
     private bool enJuego = false;
     private Vector3 posicionBola;
     private Vector3 posicionPala;
+    public AudioClip musicaFondo;
 
 
     // Start is called before the first frame update
@@ -37,13 +39,13 @@ public class GameManager : MonoBehaviour
 
     public void ReiniciarNivel()
     {
-        Time.timeScale = 0f;
-
-        bola.GetComponent<Bola>().ResetearBola();
+        bola = Instantiate(bolaNueva, posicionBola, Quaternion.identity);
         pala.transform.position = posicionPala;
+        
 
         panel.SetActive(true);
         enJuego = false;
+        Time.timeScale = 0f;
     }
 
     public void IniciarJuego()
