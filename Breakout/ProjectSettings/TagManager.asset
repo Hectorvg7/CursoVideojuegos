@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Bola
   - Suelo
+  - Field
   layers:
   - Default
   - TransparentFX

@@ -31,7 +31,7 @@ public class Vidas : MonoBehaviour
 
             if (vidasRestantes == 0)
             {
-                Debug.Log("Perdiste");
+                GameManager.Instance.MostrarGameOver();
             }
         }
     }
@@ -71,7 +71,6 @@ public class Vidas : MonoBehaviour
         {
             PerderVida();
             Destroy(collision.gameObject);
-            Debug.Log("Menos 1 vida");
             AudioManager.Instance.PlaySound(audioVida);
             GameManager.Instance.ReiniciarNivel();
         }

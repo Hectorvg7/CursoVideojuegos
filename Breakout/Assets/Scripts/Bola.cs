@@ -12,6 +12,8 @@ public class Bola : MonoBehaviour
     private float direccionX;
     public Transform pala;
     private Vector3 posicionInicial;
+    public AudioClip audioPala;
+    public AudioClip audioPared;
 
 
 
@@ -60,6 +62,19 @@ public class Bola : MonoBehaviour
         if (Math.Abs(rb.velocity.y) < velocidadMinima)
         {
             rb.velocity = new Vector2(rb.velocity.x, Math.Sign(rb.velocity.y) * velocidadMinima);
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            AudioManager.Instance.PlaySound(audioPala);
+        }
+
+        if (collision.gameObject.CompareTag("Field"))
+        {
+            AudioManager.Instance.PlaySound(audioPared);
         }
     }
 }
