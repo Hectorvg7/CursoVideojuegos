@@ -21,8 +21,10 @@ public class Pala : MonoBehaviour
         Vector2 topRight = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));  // Esquina superior derecha
 
         // Establecer los límites de la pala
+        
         minX = bottomLeft.x + GetComponent<Collider2D>().bounds.size.x / 2;  // Ajustar según el tamaño de la pala
         maxX = topRight.x - GetComponent<Collider2D>().bounds.size.x / 2;  // Ajustar según el tamaño de la pala
+        
     }
 
     // Update is called once per frame

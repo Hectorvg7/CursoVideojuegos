@@ -680,10 +680,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebe3dd2a921b4f135b084cfc8500dfc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  corazonRelleno: {fileID: 0}
-  corazonVacio: {fileID: 0}
+  corazonRelleno: {fileID: 332214223, guid: 9ac7dd760cd22525694c6269bfcee872, type: 3}
+  corazonMedio: {fileID: -1093355959, guid: 9ac7dd760cd22525694c6269bfcee872, type: 3}
+  corazonVacio: {fileID: 1896287453, guid: 9ac7dd760cd22525694c6269bfcee872, type: 3}
   corazon1: {fileID: 0}
   corazon2: {fileID: 0}
   corazon3: {fileID: 0}
-  vidasRestantes: 3
+  vidasRestantes: 6
   audioVida: {fileID: 8300000, guid: be909f6c3684c628eb0cbcb18cb8915a, type: 3}

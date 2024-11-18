@@ -18,6 +18,7 @@ public class GameManager : Singleton<GameManager>
     private Vector3 posicionBola;
     private Vector3 posicionPala;
     private Vector3 posicionPanel;
+    private Vector3 tamanoPala;
 
 
     // Start is called before the first frame update
@@ -28,6 +29,7 @@ public class GameManager : Singleton<GameManager>
         pala = Instantiate(palaNueva);
         panel.SetActive(true);
         posicionBola = bola.transform.position;
+        tamanoPala = pala.transform.localScale;
         posicionPala = pala.transform.position;
         posicionPanel = panel.transform.position;
         
@@ -63,6 +65,7 @@ public class GameManager : Singleton<GameManager>
     {
         bola = Instantiate(bolaNueva, posicionBola, Quaternion.identity);
         pala.transform.position = posicionPala;
+        pala.transform.localScale = tamanoPala;
         panel.SetActive(true);
         enJuego = false;
         Time.timeScale = 0f;
