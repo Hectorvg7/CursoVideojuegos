@@ -6,11 +6,10 @@ using UnityEngine;
 public class PowerUp : MonoBehaviour
 {
     
-    /*
-    public GameObject pala;
+
     public GameObject bola;
-    public GameObject vidas;
-    */
+    private Vidas vidas;
+    
 
     [SerializeField] float incremento = 0.25f;
     public bool powerUp1;
@@ -32,11 +31,19 @@ public class PowerUp : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.gameObject.CompareTag("Player") && powerUp2)
+        if (collider.gameObject.CompareTag("Player") && powerUp1)
         {
-            Debug.Log("Ha tocado la pala");
-            Debug.Log("Crecio la pala");
+            BolaExtra();
+            Destroy(gameObject);
+        }
+        else if (collider.gameObject.CompareTag("Player") && powerUp2)
+        {
             AumentarPala(collider.gameObject);
+            Destroy(gameObject);
+        }
+        else if (collider.gameObject.CompareTag("Player") && powerUp3)
+        {
+            AumentarVida();
             Destroy(gameObject);
         }
 
@@ -55,6 +62,27 @@ public class PowerUp : MonoBehaviour
         if (transformPala.localScale.x > tamanoMax)
         {
             transformPala.localScale = new Vector3(tamanoMax, transformPala.localScale.y, transformPala.localScale.z);
+        }
+    }
+
+    void BolaExtra()
+    {
+        bola = Instantiate(bola);
+        bola.GetComponent<Bola>().LanzarBola();
+        GameManager.Instance.bolasActivas++;
+        Debug.Log("Bolas Activas: " + GameManager.Instance.bolasActivas);
+    }
+
+    void AumentarVida()
+    {
+        if (GameManager.Instance.numeroVidas < 6)
+        {
+            vidas = FindObjectOfType<Vidas>();
+            Debug.Log("Tus vidas antes eran: " + vidas.vidasRestantes);
+            vidas.vidasRestantes++;
+            Debug.Log("Tus vidas son: " + vidas.vidasRestantes);
+            vidas.ActualizarCorazones();
+            GameManager.Instance.numeroVidas++;
         }
     }
 }

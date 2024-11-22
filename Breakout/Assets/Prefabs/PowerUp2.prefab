@@ -161,6 +161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46e2ccc572ea262ec95b87dc0086099a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bola: {fileID: 378169156234455400, guid: f9ae99d3018d12293b2ddad2f6fb67c0, type: 3}
   incremento: 0.25
   powerUp1: 0
   powerUp2: 1

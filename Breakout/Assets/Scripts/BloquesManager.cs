@@ -32,6 +32,7 @@ public class Bloques : MonoBehaviour
         {
             SoltarPowerUp();
             Destroy(gameObject);
+            GameManager.Instance.BloqueDestruido();
         }
     }
 

@@ -16,9 +16,15 @@ public class Vidas : MonoBehaviour
     public int vidasRestantes = 6;
     public AudioClip audioVida;
 
+
+
     // Start is called before the first frame update
     void Start()
     {
+        if (GameManager.Instance != null)
+        {
+            vidasRestantes = GameManager.Instance.numeroVidas;
+        }
         ActualizarCorazones();
     }
 
@@ -28,6 +34,7 @@ public class Vidas : MonoBehaviour
         if (vidasRestantes > 0)
         {
             vidasRestantes--;
+            GameManager.Instance.ContarVidas(vidasRestantes);
             ActualizarCorazones();
 
             if (vidasRestantes == 0)
@@ -37,7 +44,7 @@ public class Vidas : MonoBehaviour
         }
     }
 
-    void ActualizarCorazones(){
+    public void ActualizarCorazones(){
         
         // Actualizamos cada corazón según el número de vidas restantes
         if (vidasRestantes == 6)
@@ -88,10 +95,15 @@ public class Vidas : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Bola"))
         {
-            PerderVida();
             Destroy(collision.gameObject);
+            GameManager.Instance.bolasActivas--;
             AudioManager.Instance.PlaySound(audioVida);
-            GameManager.Instance.ReiniciarNivel();
+
+            if (GameManager.Instance.bolasActivas == 0)
+            {
+                PerderVida();
+                GameManager.Instance.ReiniciarNivel();
+            }
         }
     }
 }
