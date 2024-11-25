@@ -44,10 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5df5e338bd17f7f10992abd7ad85f8a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pala: {fileID: 443203423647056230, guid: f5a5c33d853ef5cd5936365bd57afe53, type: 3}
-  bola: {fileID: 378169156234455400, guid: f9ae99d3018d12293b2ddad2f6fb67c0, type: 3}
-  vidas: {fileID: 6688391152501581507, guid: 5aeea49f73171b788904ff6b06c428f8, type: 3}
-  panel: {fileID: 1376856990423485213, guid: 5d08e9696fd8a6861b2c85129a0bf2a0, type: 3}
   bolaNueva: {fileID: 378169156234455400, guid: f9ae99d3018d12293b2ddad2f6fb67c0, type: 3}
   panelNuevo: {fileID: 1376856990423485213, guid: 5d08e9696fd8a6861b2c85129a0bf2a0, type: 3}
   palaNueva: {fileID: 443203423647056230, guid: f5a5c33d853ef5cd5936365bd57afe53, type: 3}
+  nivelGanadoText: {fileID: 1504800432974900271, guid: 0d7c3b5cb969fc275aebc8578cdf77a0, type: 3}
+  numeroVidas: 0
+  bolasActivas: 0

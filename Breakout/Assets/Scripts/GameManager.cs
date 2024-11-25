@@ -15,6 +15,8 @@ public class GameManager : Singleton<GameManager>
     public GameObject bolaNueva;
     public GameObject panelNuevo;
     public GameObject palaNueva;
+    public GameObject nivelGanadoText;
+    public GameObject nivelGanadoActual;
     private bool enJuego = false;
     private bool isGameOver = false;
     private Vector3 posicionBola;
@@ -59,7 +61,7 @@ public class GameManager : Singleton<GameManager>
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R) && isGameOver)
+        if (Input.GetKeyDown(KeyCode.R) && SceneManager.GetActiveScene().buildIndex == 3)
         {
             SceneManager.LoadScene(0);
             isGameOver = false;
@@ -96,6 +98,7 @@ public class GameManager : Singleton<GameManager>
         bola = Instantiate(bolaNueva, posicionBola, Quaternion.identity);
         pala = Instantiate(palaNueva, posicionPala, Quaternion.identity);
         panel = Instantiate(panelNuevo, posicionPanel, Quaternion.identity);
+        
         bloquesRestantes = totalBloques;
         panel.SetActive(true);
         enJuego = false;
@@ -122,15 +125,23 @@ public class GameManager : Singleton<GameManager>
         Debug.Log(bloquesRestantes);
         if (bloquesRestantes <= 0)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        }else if (SceneManager.GetActiveScene().buildIndex == 3 )
-        {
-            isGameOver = true;
+            StartCoroutine(MostrarNivelGanado());
         }
     }
 
     public void ContarVidas(int vidasRestantes)
     {
         numeroVidas = vidasRestantes;
+    }
+
+    private IEnumerator MostrarNivelGanado(){
+        nivelGanadoActual = Instantiate(nivelGanadoText);
+        nivelGanadoActual.SetActive(true);
+        Rigidbody2D rbBola = bola.GetComponent<Rigidbody2D>();
+        rbBola.isKinematic = true;
+
+        yield return new WaitForSeconds(5);
+        nivelGanadoActual.SetActive(false);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }
