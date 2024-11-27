@@ -9,7 +9,7 @@ public class GameManager : Singleton<GameManager>
 {
     // Instancia estática de GameManager
     private GameObject pala;
-    private GameObject bola;
+    public GameObject bola;
     private Vidas vidas;
     private GameObject panel;
     public GameObject bolaNueva;
@@ -17,6 +17,7 @@ public class GameManager : Singleton<GameManager>
     public GameObject palaNueva;
     public GameObject nivelGanadoText;
     public GameObject nivelGanadoActual;
+    public AudioClip audioWin;
     private bool enJuego = false;
     private bool isGameOver = false;
     private Vector3 posicionBola;
@@ -75,7 +76,6 @@ public class GameManager : Singleton<GameManager>
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Debug.Log("Se ha cargado la escena");
         if (SceneManager.GetActiveScene().buildIndex == 1 || SceneManager.GetActiveScene().buildIndex == 2)
         {
             IniciarNivel();
@@ -139,6 +139,7 @@ public class GameManager : Singleton<GameManager>
         nivelGanadoActual.SetActive(true);
         Rigidbody2D rbBola = bola.GetComponent<Rigidbody2D>();
         rbBola.isKinematic = true;
+        AudioManager.Instance.PlaySound(audioWin);
 
         yield return new WaitForSeconds(5);
         nivelGanadoActual.SetActive(false);

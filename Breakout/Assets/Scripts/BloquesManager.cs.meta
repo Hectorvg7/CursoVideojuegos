@@ -3,7 +3,13 @@ guid: 1dd7eb5b2dbd6a551b0f9631ed8bd7c5
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - vida1: {instanceID: 0}
+  - vida2: {instanceID: 0}
+  - vida3: {instanceID: 0}
+  - vida4: {instanceID: 0}
+  - audioBloque: {fileID: 8300000, guid: be909f6c3684c628eb0cbcb18cb8915a, type: 3}
+  - audioDestroy: {fileID: 8300000, guid: 1d4b0f2eeea079cb18f2b229e705b808, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

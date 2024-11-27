@@ -69,6 +69,7 @@ public class PowerUp : MonoBehaviour
     {
         bola = Instantiate(bola);
         bola.GetComponent<Bola>().LanzarBola();
+        GameManager.Instance.bola = bola;
         GameManager.Instance.bolasActivas++;
         Debug.Log("Bolas Activas: " + GameManager.Instance.bolasActivas);
     }

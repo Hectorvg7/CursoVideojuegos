@@ -3,7 +3,13 @@ guid: 5df5e338bd17f7f10992abd7ad85f8a4
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - bolaNueva: {instanceID: 0}
+  - panelNuevo: {instanceID: 0}
+  - palaNueva: {instanceID: 0}
+  - nivelGanadoText: {instanceID: 0}
+  - nivelGanadoActual: {instanceID: 0}
+  - audioWin: {fileID: 8300000, guid: 59f146e427cbed91b8665636ca6d78c7, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

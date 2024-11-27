@@ -144,6 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vidaMaxima: 4
+  powerChance: 0.2
   vida1: {fileID: 1238983867, guid: a395a5f157f41cf3f8b2ce5aa43738aa, type: 3}
   vida2: {fileID: -915441987, guid: a395a5f157f41cf3f8b2ce5aa43738aa, type: 3}
   vida3: {fileID: -1017743164, guid: a395a5f157f41cf3f8b2ce5aa43738aa, type: 3}
@@ -152,4 +153,5 @@ MonoBehaviour:
   - {fileID: 6475337191379119206, guid: d0c9788c369d91c6ba727a9e6961af42, type: 3}
   - {fileID: 5198528578689114717, guid: 2fd1e65835ebdd33c88096c5ac12fe5c, type: 3}
   - {fileID: 6763670220875575873, guid: a03a4dfa4d542d0139c52f1760c60a04, type: 3}
-  powerChance: 0.2
+  audioBloque: {fileID: 8300000, guid: 2f7f807c727b9ccf28f062df0b28491e, type: 3}
+  audioDestroy: {fileID: 8300000, guid: 1d4b0f2eeea079cb18f2b229e705b808, type: 3}

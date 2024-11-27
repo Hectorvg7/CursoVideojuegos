@@ -5,15 +5,16 @@ using UnityEngine;
 public class Bloques : MonoBehaviour
 {
     [SerializeField] int vidaMaxima = 4;
+    [SerializeField] float powerChance = 0.2f;
     private int vidasRestantes;
-
     public Sprite vida1;
     public Sprite vida2;
     public Sprite vida3;
     public Sprite vida4;
     public GameObject[] powerUps;
+    public AudioClip audioBloque;
+    public AudioClip audioDestroy;
 
-    public float powerChance = 0.2f;
     private SpriteRenderer sr;
 
     // Start is called before the first frame update
@@ -28,9 +29,14 @@ public class Bloques : MonoBehaviour
     {
         vidasRestantes--;
         ActualizarSprite();
-        if (vidasRestantes <= 0)
+        if (vidasRestantes > 0)
+        {
+            AudioManager.Instance.PlaySound(audioBloque);
+        }
+        else if (vidasRestantes <= 0)
         {
             SoltarPowerUp();
+            AudioManager.Instance.PlaySound(audioDestroy);
             Destroy(gameObject);
             GameManager.Instance.BloqueDestruido();
         }
