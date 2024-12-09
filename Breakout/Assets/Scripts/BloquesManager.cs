@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Bloques : MonoBehaviour
 {
-    [SerializeField] int vidaMaxima = 4;
     [SerializeField] float powerChance = 0.2f;
-    private int vidasRestantes;
+    public int vidasRestantes;
     public Sprite vida1;
     public Sprite vida2;
     public Sprite vida3;
@@ -20,9 +20,17 @@ public class Bloques : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        vidasRestantes = vidaMaxima;
         sr = GetComponent<SpriteRenderer>();
-        AsignarVidaInicial();
+
+        if (SceneManager.GetActiveScene().buildIndex != 4)
+        {
+            AsignarVidaInicial();
+        }
+    }
+
+    void Update()
+    {
+        ActualizarSprite();
     }
 
     public void ReducirVida()
@@ -54,26 +62,27 @@ public class Bloques : MonoBehaviour
         
     }
 
-    void ActualizarSprite()
+    public void ActualizarSprite()
     {
-        switch (vidasRestantes)
-        {
-            case 4:
-                sr.sprite = vida4;
-                break;
-            case 3:
-                sr.sprite = vida3;
-                break;
-            case 2:
-                sr.sprite = vida2;
-                break;
-            case 1:
-                sr.sprite = vida1;
-                break;         
-            default:
-                sr.sprite = vida1;
-                break;
-        }
+            switch (vidasRestantes)
+            {
+                case 4:
+                    sr.sprite = vida4;
+                    break;
+                case 3:
+                    sr.sprite = vida3;
+                    break;
+                case 2:
+                    sr.sprite = vida2;
+                    break;
+                case 1:
+                    sr.sprite = vida1;
+                    break;         
+                default:
+                    sr.sprite = vida1;
+                    break;
+            }
+        
     }
 
     void AsignarVidaInicial(){

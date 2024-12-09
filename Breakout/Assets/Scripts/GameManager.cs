@@ -27,8 +27,10 @@ public class GameManager : Singleton<GameManager>
 
     private int totalBloques;
     private int bloquesRestantes;
+    public GameObject[] bloques;
     public int numeroVidas;
     public int bolasActivas;
+    public bool subirDificultad = false;
 
 
 
@@ -50,7 +52,7 @@ public class GameManager : Singleton<GameManager>
         numeroVidas = vidas.vidasRestantes;
 
 
-        GameObject[] bloques = GameObject.FindGameObjectsWithTag("Bloque");
+        bloques = GameObject.FindGameObjectsWithTag("Bloque");
         totalBloques = bloques.Length;
         bloquesRestantes = totalBloques;
         
@@ -62,6 +64,12 @@ public class GameManager : Singleton<GameManager>
     // Update is called once per frame
     void Update()
     {
+        //REVISAR
+        bloques = GameObject.FindGameObjectsWithTag("Bloque");
+        totalBloques = bloques.Length;
+        bloquesRestantes = totalBloques;
+        
+
         if (Input.GetKeyDown(KeyCode.R) && SceneManager.GetActiveScene().buildIndex == 3)
         {
             SceneManager.LoadScene(0);
@@ -71,12 +79,13 @@ public class GameManager : Singleton<GameManager>
         if (Input.GetKeyDown(KeyCode.Space) && !enJuego && !isGameOver && SceneManager.GetActiveScene().buildIndex != 0)
         {
             IniciarJuego();
+            subirDificultad = false;
         }
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (SceneManager.GetActiveScene().buildIndex == 1 || SceneManager.GetActiveScene().buildIndex == 2)
+        if (SceneManager.GetActiveScene().buildIndex == 1 || SceneManager.GetActiveScene().buildIndex == 2 || SceneManager.GetActiveScene().buildIndex == 4)
         {
             IniciarNivel();
         }
@@ -99,6 +108,7 @@ public class GameManager : Singleton<GameManager>
         pala = Instantiate(palaNueva, posicionPala, Quaternion.identity);
         panel = Instantiate(panelNuevo, posicionPanel, Quaternion.identity);
         
+        bolasActivas = 1;
         bloquesRestantes = totalBloques;
         panel.SetActive(true);
         enJuego = false;
@@ -122,7 +132,6 @@ public class GameManager : Singleton<GameManager>
     public void BloqueDestruido()
     {
         bloquesRestantes--;
-        Debug.Log(bloquesRestantes);
         if (bloquesRestantes <= 0)
         {
             StartCoroutine(MostrarNivelGanado());
@@ -134,15 +143,42 @@ public class GameManager : Singleton<GameManager>
         numeroVidas = vidasRestantes;
     }
 
+    public void BorrarBloques()
+    {
+        foreach (GameObject bloque in bloques)
+        {
+            if (bloque != null)
+            {
+                Destroy(bloque);
+            }
+        }
+        bloques = new GameObject[0];
+    }
+
     private IEnumerator MostrarNivelGanado(){
         nivelGanadoActual = Instantiate(nivelGanadoText);
         nivelGanadoActual.SetActive(true);
-        Rigidbody2D rbBola = bola.GetComponent<Rigidbody2D>();
-        rbBola.isKinematic = true;
+        Destroy(bola);
         AudioManager.Instance.PlaySound(audioWin);
 
         yield return new WaitForSeconds(5);
         nivelGanadoActual.SetActive(false);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        if (SceneManager.GetActiveScene().buildIndex == 4)
+        {
+            subirDificultad = true;
+            Destroy(pala);
+            IniciarNivel();
+        }else
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
     }
 }
+
+
+/*
+    - Actualizar vida de los bloques
+    - Controlar colisión de bola después de ganar (Hecho)
+    - Controlar bola extra en PCG (Hecho)
+    - Controlar Pala en PCG al iniciar nivel (Hecho)
+*/

@@ -21,4 +21,9 @@ public class StartGame : MonoBehaviour
     {
         SceneManager.LoadScene(1);
     }
+
+    public void CargarProcedural()
+    {
+        SceneManager.LoadScene("NivelPCG");
+    }
 }
