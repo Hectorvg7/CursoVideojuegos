@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
-
     public float speed;
     public Rigidbody2D rb;
 
@@ -23,20 +22,10 @@ public class Ball : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             rb.velocity = rb.velocity * 1.1f;
-        }else if (collision.gameObject.CompareTag("Field"))
+        }
+        else if (collision.gameObject.CompareTag("Field"))
         {
             GetComponent<AudioSource>().Play();
         }
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
     }
 }
