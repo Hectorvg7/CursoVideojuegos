@@ -1870,7 +1870,6 @@ GameObject:
   - component: {fileID: 894969548}
   - component: {fileID: 894969547}
   - component: {fileID: 894969546}
-  - component: {fileID: 894969545}
   m_Layer: 0
   m_Name: Player2CPU
   m_TagString: Player
@@ -1878,20 +1877,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!114 &894969545
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 894969544}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3dc3558e13227fb28a9787855f602a50, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isPlayer1: 0
-  speed: 5
 --- !u!82 &894969546
 AudioSource:
   m_ObjectHideFlags: 0
