@@ -65,6 +65,10 @@ public class Player : MonoBehaviour
         {
             irDerecha = false;
             transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+        } else if (rb.velocity.x == 0 && irDerecha)
+        {
+            irDerecha = true;
+            transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
         }
     }
 
@@ -108,18 +112,16 @@ public class Player : MonoBehaviour
 
     void CheckIddleTransitions()
     {
-        if (!isGrounded())
-        {
-            if (isNextToTheWall())
+        if (!isGrounded() && isNextToTheWall())
             {
                 estado = PlayerState.sliding;
+
             }
-            else
+        if (isGrounded() && saltar)
             {
                 animator.SetTrigger("Jumps");
                 estado = PlayerState.jump;
             }
-        }
         else if (irHorizontal != 0)
         {
             estado = PlayerState.running;
@@ -250,7 +252,7 @@ public class Player : MonoBehaviour
     public bool isNextToTheWall()
     {
         Vector2 direccion = irDerecha ? Vector2.right : Vector2.left;
-        var boxCastHit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, direccion, 0.1f, mapLayer);
+        var boxCastHit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, direccion, 0.01f, mapLayer);
         return boxCastHit.collider != null;
     }
     void Jump()
