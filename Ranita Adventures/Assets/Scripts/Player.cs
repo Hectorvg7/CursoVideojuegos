@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     [SerializeField] Animator animator;
     [SerializeField] GameManager gm;
     [SerializeField] LayerMask mapLayer;
-    [SerializeField] AudioSource audioSource;
+    public AudioClip audioSalto;
     float irHorizontal;
     bool irDerecha = true;
     bool saltar;
@@ -33,11 +33,12 @@ public class Player : MonoBehaviour
         boxCollider = GetComponent<BoxCollider2D>();
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        audioSource = GetComponent<AudioSource>();
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
-    // Update is called once per frame
+    /* Leemos los inputs del usuario, 
+    comprobamos la orientación a la que debe mirar el personaje 
+    y establecemos las condiciones para las animaciones. */
     void Update()
     {
         ReadInputs();
@@ -56,19 +57,15 @@ public class Player : MonoBehaviour
 
     private void ControlOrientation()
     {
-        if (rb.velocity.x > 0 && !irDerecha)
+        if (rb.velocity.x > 0.1f && !irDerecha)
         {
             irDerecha = true;
             transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
         }
-        else if (rb.velocity.x < 0 && irDerecha)
+        else if (rb.velocity.x < -0.1f && irDerecha)
         {
             irDerecha = false;
             transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
-        } else if (rb.velocity.x == 0 && irDerecha)
-        {
-            irDerecha = true;
-            transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
         }
     }
 
@@ -79,7 +76,7 @@ public class Player : MonoBehaviour
         animator.SetBool("OnTheWall", isNextToTheWall());
     }
 
-    //Cambios en las físicas.
+//Cambios en las físicas.
     void FixedUpdate()
     {
         switch (estado)
@@ -103,6 +100,8 @@ public class Player : MonoBehaviour
 
     }
 
+
+// Estado Iddle
     void FixedUpdateIddle()
     {
         CheckIddleTransitions();
@@ -142,7 +141,8 @@ public class Player : MonoBehaviour
         saltar = false;
     }
 
-    
+
+//Estado Run
     void FixedUpdateRun()
     {
         CheckRunTransitions();
@@ -170,6 +170,8 @@ public class Player : MonoBehaviour
         }
     }
 
+
+//Estado Jump
     void FixedUpdateJump()
     {
         CheckJumpTransitions();
@@ -199,6 +201,8 @@ public class Player : MonoBehaviour
         }
     }
 
+
+//Estado DoubleJump
     void FixedUpdateDoubleJump()
     {
         CheckDoubleJumpTransitions();
@@ -217,6 +221,9 @@ public class Player : MonoBehaviour
             estado = PlayerState.sliding;
         }
     }
+ 
+
+//Estado Slide
     void FixedUpdateSliding()
     {
         CheckSlidingTransitions();
@@ -235,14 +242,10 @@ public class Player : MonoBehaviour
             estado = PlayerState.jump;
         }
     }
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
 
+
+//Comprobar si está tocando el suelo o la pared.
     public bool isGrounded()
     {
         var boxCastHit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, Vector2.down, 0.1f, mapLayer);
@@ -255,12 +258,16 @@ public class Player : MonoBehaviour
         var boxCastHit = Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0, direccion, 0.01f, mapLayer);
         return boxCastHit.collider != null;
     }
+
+
+//Método para saltar y hacer doble salto.
     void Jump()
     {
         rb.velocity = new Vector2(rb.velocity.x, fuerzaSalto);
         animator.SetTrigger("Jumps");
-        //audioSource.PlayOneShot(jumpClip);
+        AudioManager.Instance.PlaySound(audioSalto);
     }
+
     void DoubleJump()
     {
         if (isNextToTheWall())
@@ -272,7 +279,7 @@ public class Player : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, fuerzaDobleSalto);
         }
         animator.SetTrigger("DoubleJumps");
-        //audioSource.PlayOneShot(doubleJumpClip);
+        AudioManager.Instance.PlaySound(audioSalto);
     }
 
 
