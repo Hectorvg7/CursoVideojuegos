@@ -15,8 +15,8 @@ public class Player : MonoBehaviour
     bool irDerecha = true;
     bool saltar;
     float velocidadMov = 5f;
-    float fuerzaSalto = 10f;
-    float fuerzaDobleSalto = 6f;
+    float fuerzaSalto = 8f;
+    float fuerzaDobleSalto = 5f;
     public PlayerState estado = PlayerState.iddle;
 
     public enum PlayerState

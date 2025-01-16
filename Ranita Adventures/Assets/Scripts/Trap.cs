@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class Saw : MonoBehaviour
+public class Trap : MonoBehaviour
 {
 
     [SerializeField] CircleCollider2D circleCollider;
@@ -10,8 +11,11 @@ public class Saw : MonoBehaviour
     [SerializeField] Animator animator;
     [SerializeField] float velocidadMov = 2f;
     [SerializeField] float movimiento = 5f;
+    [SerializeField] bool horizontal = false;
+    [SerializeField] bool vertical = true;
     private Vector3 posInicial;
     private bool subiendo = true;
+    private bool derecha = true;
 
 
     // Start is called before the first frame update
@@ -31,7 +35,15 @@ public class Saw : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (vertical)
+        {
         MoverY();
+        }
+
+        if (horizontal)
+        {
+            MoverX();
+        }
     }
 
     void MoverY()
@@ -42,6 +54,25 @@ public class Saw : MonoBehaviour
         if (transform.position == destino)
         {
             subiendo = !subiendo;
+        }
+    }
+
+    void MoverX()
+    {
+        Vector3 destino = derecha ? posInicial + Vector3.right * movimiento : posInicial;
+        transform.position = Vector3.MoveTowards(transform.position, destino, velocidadMov * Time.deltaTime);
+
+        if (transform.position == destino)
+        {
+            derecha = !derecha;
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D colision)
+    {
+        if (colision.gameObject.CompareTag("Player"))
+        {
+            Destroy(colision.gameObject);
         }
     }
 }
