@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: 94c2c19c76f97e12c96d14d8f903c806
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - eatFruit: {fileID: 8300000, guid: 37f34806c652ff14db060a085c702add, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

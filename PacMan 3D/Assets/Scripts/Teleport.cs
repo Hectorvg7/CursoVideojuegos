@@ -5,11 +5,11 @@ using UnityEngine.AI;
 
 public class Teleport : MonoBehaviour
 {
-
-    public Transform puntoDeDestino;  // El punto de destino para el teletransporte
+    public Transform puntoDeDestino; // El punto de destino para el teletransporte
 
     private void OnTriggerEnter(Collider other)
     {
+        // Teletransportar al jugador al otro lado
         if (other.CompareTag("Player"))
         {
             if (puntoDeDestino.position.x < 0)
@@ -21,9 +21,6 @@ public class Teleport : MonoBehaviour
             {
                 other.GetComponent<NavMeshAgent>().Warp(puntoDeDestino.position + Vector3.left);
             }
-            // Teletransportar al jugador al otro lado
-            
-            Debug.Log("Teleport loading...");
         }
     }
 }
