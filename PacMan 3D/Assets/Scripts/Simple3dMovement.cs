@@ -5,7 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class Simple3DMovement : MonoBehaviour
 {
-    [SerializeField] float speed = 5f;
+    [SerializeField]
+    float speed = 5f;
 
     [SerializeField]
     [Range(0.0f, 0.3f)]
@@ -33,21 +34,35 @@ public class Simple3DMovement : MonoBehaviour
 
         if (move != Vector2.zero)
         {
-            targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg +
-                      Camera.main.transform.eulerAngles.y;
+            targetRotation =
+                Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg
+                + Camera.main.transform.eulerAngles.y;
 
-            float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref rotationVelocity,
-                RotationSmoothTime);
+            float rotation = Mathf.SmoothDampAngle(
+                transform.eulerAngles.y,
+                targetRotation,
+                ref rotationVelocity,
+                RotationSmoothTime
+            );
 
             // rotate to face input direction relative to camera position
             transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
-            Vector3 targetDirection = Quaternion.Euler(0.0f, targetRotation, 0.0f) * Vector3.forward;
+            Vector3 targetDirection =
+                Quaternion.Euler(0.0f, targetRotation, 0.0f) * Vector3.forward;
 
             // move the player
             //characterController.Move(targetDirection.normalized * (speed * Time.deltaTime));
             characterController.SimpleMove(targetDirection * speed);
-
         }
+    }
 
+    //Comprobamos si hay colisión con algún enemigo, si es así PacMan queda eliminado.
+    void OnTriggerEnter(Collider collider)
+    {
+        if (collider.gameObject.CompareTag("Enemy"))
+        {
+            Debug.Log("PacMan ha sido eliminado");
+            Destroy(gameObject);
+        }
     }
 }

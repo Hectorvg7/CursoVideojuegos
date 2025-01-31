@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class CameraManager : MonoBehaviour
@@ -17,7 +18,7 @@ public class CameraManager : MonoBehaviour
 
     void Awake()
     {
-        player = GameObject.Find("Player");
+        player = GameObject.FindGameObjectWithTag("Player");
         posInicial = player.transform.position;
         velocity = player.GetComponent<Rigidbody2D>().velocity;
         cam = Camera.main;
@@ -26,12 +27,12 @@ public class CameraManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        movimientoCamara();
-
-        if (Input.GetKey(KeyCode.R))
+        if (player == null)
         {
-            player.transform.position = posInicial;
+            player = GameObject.FindGameObjectWithTag("Player");
         }
+    
+        movimientoCamara();
     }
 
     void movimientoCamara()

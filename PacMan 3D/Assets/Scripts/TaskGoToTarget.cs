@@ -17,12 +17,17 @@ public class TaskGoToTarget : Node
 
     public override NodeState Evaluate()
     {
-        Debug.Log(ghostBT.pacmanLayer);
-        Transform target = (Transform)bTree.GetData("target");
+        GameObject target = (GameObject)bTree.GetData("target");
         if (target != null)
-            agent.destination = target.position;
+        {
+            agent.destination = target.transform.position;
+            state = NodeState.SUCCESS;
+        }
+        else
+        {
+            state = NodeState.FAILURE;
+        }
 
-        state = NodeState.RUNNING;
         return state;
     }
 }

@@ -10,8 +10,9 @@ public class GhostBT : BTree
 
     protected override Node SetupTree()
     {
-        //Creamos un nodo selector en el que hay una secuencia y el nodo Patrol.
-        //La secuencia comprueba si PacMan está en el rango; si es así va a por él, si no sigue patrullando.
+        //Creamos un nodo selector en el que hay 2 secuencias.
+        //La primera secuencia comprueba si PacMan está en el rango; si es así va a por él, si no pasa a la siguiente secuencia.
+        //La segunda secuencia irá al primer punto de patrulla y se esperará 2 segundos para ir al siguiente punto.
         return new Selector(
             this,
             new List<Node>
@@ -20,7 +21,7 @@ public class GhostBT : BTree
                     this,
                     new List<Node> { new TaskPacmanIsOnRange(this), new TaskGoToTarget(this) }
                 ),
-                new TaskPatrol(this),
+                new Sequence(this, new List<Node> { new TaskPatrol(this), new TaskWait(this) }),
             }
         );
     }

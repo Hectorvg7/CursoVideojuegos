@@ -7,7 +7,7 @@ public class TaskPacmanIsOnRange : Node
 {
     GhostBT ghostBT;
 
-    public float rangoDeteccion = 10f;
+    public float rangoDeteccion = 5f;
     LayerMask pacmanLayer;
 
     public TaskPacmanIsOnRange(BTree btree)
@@ -30,9 +30,13 @@ public class TaskPacmanIsOnRange : Node
             Debug.Log("PacMan ha sido detectado");
             GameObject pacman = colliders[0].gameObject;
             bTree.SetData("target", pacman);
+            state = NodeState.SUCCESS;
+        }
+        else
+        {
+            state = NodeState.FAILURE;
         }
 
-        state = NodeState.RUNNING;
         return state;
     }
 }

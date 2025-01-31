@@ -4,15 +4,24 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public GameObject player;
+    private GameObject playerActual;
+    private Vector2 posPlayer;
+
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        
+        playerActual = GameObject.FindGameObjectWithTag("Player");
+        posPlayer = playerActual.transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (playerActual == null && Input.GetKeyDown(KeyCode.R))
+        {
+            playerActual = Instantiate(player);
+            playerActual.transform.position = posPlayer;
+        }
     }
 }
