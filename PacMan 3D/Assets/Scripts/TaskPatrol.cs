@@ -22,7 +22,7 @@ public class TaskPatrol : Node
 
     public override NodeState Evaluate()
     {
-        isWaiting = (bool)bTree.GetData("wait");
+        isWaiting = bTree.GetData("wait") as bool? ?? false;
         //Si está esperando nos aseguramos de que no se mueva.
         if (isWaiting)
         {

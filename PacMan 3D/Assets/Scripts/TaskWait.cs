@@ -9,7 +9,7 @@ public class TaskWait : Node
     GhostBT ghostBT;
     UnityEngine.AI.NavMeshAgent agent;
     private float tiempoEspera = 2f;
-    private float tiempoActual;
+    private float tiempoActual = 0;
 
     public TaskWait(BTree btree)
         : base(btree)
@@ -28,11 +28,12 @@ public class TaskWait : Node
 
         if (tiempoActual >= tiempoEspera)
         {
-            Debug.Log("Estamos dentro mi loco");
+            Debug.Log("Ya ha esperado");
             //Corregir para que siga patrullando cuando acabe de esperar.
             bTree.SetData("wait", false);
             tiempoActual = 0;
             state = NodeState.SUCCESS;
+            return state;
         }
         return state;
     }

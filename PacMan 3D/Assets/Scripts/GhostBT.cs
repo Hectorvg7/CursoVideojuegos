@@ -21,7 +21,7 @@ public class GhostBT : BTree
                     this,
                     new List<Node> { new TaskPacmanIsOnRange(this), new TaskGoToTarget(this) }
                 ),
-                new Sequence(this, new List<Node> { new TaskPatrol(this), new TaskWait(this) }),
+                new Sequence(this, new List<Node> { new TaskWait(this), new TaskPatrol(this) }),
             }
         );
     }

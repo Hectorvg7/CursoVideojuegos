@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playerActual == null && Input.GetKeyDown(KeyCode.R))
+        if (playerActual == null)
         {
             playerActual = Instantiate(player);
             playerActual.transform.position = posPlayer;
