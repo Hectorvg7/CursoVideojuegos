@@ -7,7 +7,7 @@ public class TaskPacmanIsOnRange : Node
 {
     GhostBT ghostBT;
 
-    public float rangoDeteccion = 5f;
+    public float rangoDeteccion = 4f;
     LayerMask pacmanLayer;
 
     public TaskPacmanIsOnRange(BTree btree)
