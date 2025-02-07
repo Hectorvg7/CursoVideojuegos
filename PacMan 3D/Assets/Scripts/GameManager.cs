@@ -5,25 +5,22 @@ using UnityEngine.AI;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] GameObject player;
+    [SerializeField]
+    GameObject player;
     private GameObject playerActual;
     private GameObject[] dots;
     private int dotsRestantes;
     private GameObject[] enemies;
-    public GameObject contador;
     private float tiempoRestante = 3f;
-    private NavMeshAgent agentePlayer;
 
     //Inicializar variables.
     void Awake()
     {
         playerActual = GameObject.FindGameObjectWithTag("Player");
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        agentePlayer = playerActual.GetComponent<NavMeshAgent>();
-        
+
         StartCoroutine(DetenerMovimiento());
     }
-
 
     // Update is called once per frame
     void Update()
@@ -55,7 +52,6 @@ public class GameManager : MonoBehaviour
     IEnumerator DetenerMovimiento()
     {
         // Desactivo el movimiento de los objetos.
-        agentePlayer.isStopped = true;
         foreach (var enemy in enemies)
         {
             enemy.GetComponent<NavMeshAgent>().isStopped = true;
@@ -65,12 +61,9 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(tiempoRestante);
 
         // Vuelvo a activar el movimiento de los objetos.
-        agentePlayer.isStopped = false;
         foreach (var enemy in enemies)
         {
             enemy.GetComponent<NavMeshAgent>().isStopped = false;
         }
-
     }
-
 }

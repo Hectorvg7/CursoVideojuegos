@@ -585,7 +585,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8230117171512821507, guid: 0e3dcfa08784bd9d7a172564067c3c65, type: 3}
   m_PrefabInstance: {fileID: 1063891822}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &1260147368
+--- !u!1001 &1182247085
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -595,11 +595,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2051960615380849694, guid: 8176e468f81bd501ba34b8658999c780, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5
+      value: -6.79
       objectReference: {fileID: 0}
     - target: {fileID: 2051960615380849694, guid: 8176e468f81bd501ba34b8658999c780, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3
+      value: -2.77
       objectReference: {fileID: 0}
     - target: {fileID: 2051960615380849694, guid: 8176e468f81bd501ba34b8658999c780, type: 3}
       propertyPath: m_LocalPosition.z
@@ -633,13 +633,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2229766503736187560, guid: 8176e468f81bd501ba34b8658999c780, type: 3}
-      propertyPath: boxCollider
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 5029374402035491090, guid: 8176e468f81bd501ba34b8658999c780, type: 3}
       propertyPath: m_Name
-      value: Player
+      value: Player (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4207,7 +4203,6 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1441294647}
-  - {fileID: 1260147368}
   - {fileID: 2087601446}
   - {fileID: 1368955452}
   - {fileID: 909542283}
@@ -4215,3 +4210,4 @@ SceneRoots:
   - {fileID: 494386021}
   - {fileID: 607591243}
   - {fileID: 1296610159}
+  - {fileID: 1182247085}

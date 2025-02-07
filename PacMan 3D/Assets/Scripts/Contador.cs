@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Contador : MonoBehaviour
 {
-
     public TextMeshProUGUI textContador;
     public float tiempoRestante = 3f;
     private bool cuentaActiva = false;
@@ -40,5 +39,4 @@ public class Contador : MonoBehaviour
             }
         }
     }
-
 }
