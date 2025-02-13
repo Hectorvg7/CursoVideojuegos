@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class Player : MonoBehaviour
 {
     Vector3 direction;
-    float speed = 3f;
+    float speed = 5f;
     Rigidbody2D rb;
     bool attackPending = false;
 
@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         Move();
     }
