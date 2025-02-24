@@ -4,27 +4,48 @@ using UnityEngine;
 
 public class GridSystem
 {
-    private float ancho;
-    private float altura;
-    private Vector3 tamanoCelda;
-    private List<GridObject> gridObjects;
+    private int ancho;
+    private int altura;
+    private float tamanoCelda;
+    private GridObject[,] gridObjects;
 
-    public Vector3 GetWorldPosition(GridObject gridObject)
+    public GridSystem(int ancho, int altura, float tamanoCelda)
     {
-        Vector3 worldPosition = new Vector3(gridObject.gridPosition.x, 0, gridObject.gridPosition.z);
+        this.ancho = ancho;
+        this.altura = altura;
+        this.tamanoCelda = tamanoCelda;
+
+        gridObjects = new GridObject[ancho, altura];
+        for (int x = 0; x < ancho; x++)
+        {
+            for (int z = 0; z < altura; z++)
+            {
+                gridObjects[x, z] = new GridObject(new GridPosition(x, z));
+            }
+        }
+    }
+
+    public Vector3 GetWorldPosition(GridPosition gridPosition)
+    {
+        Vector3 worldPosition = new Vector3(gridPosition.x * tamanoCelda, 0, gridPosition.z * tamanoCelda);
         return worldPosition;
     }
 
-    /*
+    public GridPosition GetGridPosition(Vector3 worldPosition)
+    {
+        int x = Mathf.FloorToInt(worldPosition.x / tamanoCelda);
+        int z = Mathf.FloorToInt(worldPosition.z / tamanoCelda);
+        return new GridPosition(x, z);
+    }
+
     public bool IsValidGridPosition(GridPosition gridPosition)
     {
-    
+        return gridPosition.x >= 0 && gridPosition.x < ancho && gridPosition.z >= 0 && gridPosition.z < ancho;
     }
-    */
 
     public GridObject GetGridObject(GridPosition gridPosition)
     {
-        return gridObjects[0];
+        return IsValidGridPosition(gridPosition) ? gridObjects[gridPosition.x, gridPosition.z] : null;
     }
 
     public float GetWidth()

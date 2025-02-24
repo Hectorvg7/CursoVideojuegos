@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelGrid : Singleton<LevelGrid>
+public class LevelGrid : MonoBehaviour
 {
     public static LevelGrid Instance { get; private set; }
     private GridSystem gridSystem;
@@ -15,48 +15,53 @@ public class LevelGrid : Singleton<LevelGrid>
             return;
         }
         Instance = this;
+
+        gridSystem = new GridSystem(7, 14, 1f);
     }
     
-//  CORREGIR
-    public void AddUnitAtGridPosition()
-    {
 
+    public void AddUnitAtGridPosition(Unit unit, GridPosition gridPosition)
+    {
+        GridObject gridObject = gridSystem.GetGridObject(gridPosition);
+        gridObject?.AddUnit(unit);
     }
 
-//  CORREGIR
+
+    public void RemoveUnitAtGridPosition(Unit unit, GridPosition gridPosition)
+    {
+        GridObject gridObject = gridSystem.GetGridObject(gridPosition);
+        gridObject?.RemoveUnit(unit);
+    }
+
+
     public List<Unit> GetUnitListAtGridPosition(GridPosition gridPosition)
     {
-        return gridSystem.gridObjects;
+        GridObject gridObject = gridSystem.GetGridObject(gridPosition);
+        return gridObject?.GetUnitList();
     }
 
-//  CORREGIR
-    public void RemoveUnitAtGridPosition(GridPosition gridPosition)
+
+    public GridPosition GetGridPosition(Vector3 worldPosition)
     {
-
+        return gridSystem.GetGridPosition(worldPosition);
     }
 
-    public GridPosition GetGridPosition(GridObject gridObject)
+
+    public Vector3 GetWorldPosition(GridPosition gridPosition)
     {
-        return gridObject.gridPosition;
+        return gridSystem.GetWorldPosition(gridPosition);
     }
 
-//  CORREGIR
-    public GetWorldPosition()
-    {
-        gridSystem.GetWorldPosition(gridSystem.GetGridObject());
-    }
 
-//  CORREGIR
     public bool HasAnyUnitOnGridPosition(GridPosition gridPosition)
     {
-        return bool;
+        return GetUnitListAtGridPosition(gridPosition).Count > 0;
     }
 
 
-//  CORREGIR
-    public bool IsValidGridPosition()
+    public bool IsValidGridPosition(GridPosition gridPosition)
     {
-        return bool;
+        return gridSystem.IsValidGridPosition(gridPosition);
     }
 
 
@@ -70,9 +75,4 @@ public class LevelGrid : Singleton<LevelGrid>
         return gridSystem.GetHeight();
     }
 
-//  CORREGIR
-    public GridObject GetObjectAtGridPosition(GridPosition gridPosition)
-    {
-        
-    }
 }

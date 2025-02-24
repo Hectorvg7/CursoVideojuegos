@@ -7,6 +7,12 @@ public class GridObject
     public GridPosition gridPosition;
     private List<Unit> unitList;
 
+    public GridObject(GridPosition position)
+    {
+        this.gridPosition = position;
+        this.unitList = new List<Unit>();
+    }
+
     public List<Unit> GetUnitList()
     {
         return unitList;
@@ -19,6 +25,9 @@ public class GridObject
 
     public void AddUnit(Unit unit)
     {
-        unitList.Add(unit);
+        if (!unitList.Contains(unit))
+        {    
+            unitList.Add(unit);
+        }
     }
 }
