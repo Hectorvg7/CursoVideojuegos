@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class UnitsController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public static UnitsController Instance { get; private set; }
+    
+    private BaseAction selectedAction;
+    public void SetSelectedAction(BaseAction baseAction)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        selectedAction = baseAction;
     }
 }
