@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
-    public int maxPointsPerTurn;
+    public int maxPointsPerTurn = 4;
     public int actionPoints;
     public GridPosition gridPosition;
     public BaseAction[] availableActions;
@@ -63,8 +63,14 @@ public class Unit : MonoBehaviour
     {
         if (CanSpendPointsToTakeAction(action))
         {
-            action.TakeAction(gridPosition);
+            action.TakeAction(gridPosition, ClearBusy);
             actionPoints -= action.GetActionPointsCost();
+        } 
+        else 
+        {
+            Debug.Log("No tienes suficientes puntos para realizar la acción.");
         }
     }
+
+    private void ClearBusy(){}
 }

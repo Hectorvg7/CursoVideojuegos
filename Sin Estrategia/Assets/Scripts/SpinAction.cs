@@ -24,9 +24,10 @@ public class SpinAction : BaseAction
         }
     }
 
-    public override void TakeAction(GridPosition gridPosition)
+    public override void TakeAction(GridPosition gridPosition, Action onActionComplete)
     {
         isActive = true;
+        this.onActionComplete = onActionComplete;
         totalSpinAmount = 0;
     }
 
