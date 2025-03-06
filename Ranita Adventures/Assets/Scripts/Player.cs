@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
@@ -11,13 +12,16 @@ public class Player : MonoBehaviour
     [SerializeField] GameManager gm;
     [SerializeField] LayerMask mapLayer;
     public AudioClip audioSalto;
-    float irHorizontal;
+
     bool irDerecha = true;
-    bool saltar;
     float velocidadMov = 5f;
     float fuerzaSalto = 8f;
     float fuerzaDobleSalto = 5f;
     public PlayerState estado = PlayerState.iddle;
+
+    // Guardamos las referencias a las acciones del Input System
+    private float irHorizontal;
+    private bool saltar;
 
     public enum PlayerState
     {
@@ -41,18 +45,23 @@ public class Player : MonoBehaviour
     y establecemos las condiciones para las animaciones. */
     void Update()
     {
-        ReadInputs();
         ControlOrientation();
         SetAnimations();
     }
 
 
-    private void ReadInputs()
+    public void OnMove(InputAction.CallbackContext input)
     {
-        //Recoger inputs del usuario.
-        irHorizontal = Input.GetAxisRaw("Horizontal");
-        if (Input.GetKeyDown(KeyCode.Space))
+        Vector2 moveInput = input.ReadValue<Vector2>();
+        irHorizontal = moveInput.x;
+    }
+
+    public void OnJump(InputAction.CallbackContext input)
+    {
+        if (input.ReadValue<float>() > 0.1f)
+        {
             saltar = true;
+        }
     }
 
     private void ControlOrientation()

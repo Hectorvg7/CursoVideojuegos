@@ -18,7 +18,7 @@ public class LevelGrid : MonoBehaviour
 
         gridSystem = new GridSystem(7, 14, 1f);
     }
-    
+
 
     public void AddUnitAtGridPosition(Unit unit, GridPosition gridPosition)
     {
