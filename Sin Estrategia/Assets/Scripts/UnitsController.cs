@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -8,16 +10,29 @@ public class UnitsController : MonoBehaviour
     public static UnitsController Instance { get; private set; }
     
     private BaseAction selectedAction;
-    private Unit selectedUnit;
+    public Unit selectedUnit;
+    public GameObject prefabBoton;
+    public GameObject grupoBotones;
+    private bool isBusy = false;
 
+    void Awake()
+    {
+      Instance = this;  
+    }
 
     public void SetSelectedAction(BaseAction baseAction)
     {
+        Debug.Log("Set selected action: " + baseAction.ToString());
         selectedAction = baseAction;
     }
 
     void Update()
     {
+        if (isBusy)
+        {
+            return;
+        }
+
         if (Input.GetMouseButtonDown(0))
         {
             if (EventSystem.current.IsPointerOverGameObject())
@@ -25,30 +40,22 @@ public class UnitsController : MonoBehaviour
                 return;
             }
 
-            if (selectedUnit != null)
-            {
-                MoveUnitToClick();
-            }
-            else
+            if (selectedUnit == null)
             {
                 SelectUnit();
             }
+
+            //Hacer rayo a suelo
+            //Pasar posición de mundo (Vector3) a gridPosition -> 
+            //gridPosition = LevelGrid.Instance.GetGridPosition(HierarchyType.point)
+            //selectedAction.TakeAction(gridPosition, ClearBussy);
+
         }
     }
 
-    private void MoveUnitToClick()
+    private void ClearBussy()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit))
-        {
-            // Obtener la GridPosition del lugar donde hacemos clic
-            GridPosition targetGridPosition = LevelGrid.Instance.GetGridPosition(hit.point);
-
-            // Mover la unidad seleccionada a esa GridPosition
-            MoveTo(targetGridPosition);
-        }
+        isBusy = false;
     }
 
     private void SelectUnit()
@@ -63,11 +70,38 @@ public class UnitsController : MonoBehaviour
             if (unit != null)
             {
                 selectedUnit = unit;
-                GridVisualizer.Instance.SetSelectedUnit(unit);
                 selectedUnit.SelectUnit(); // Llamar al método de selección de unidad
+                //selectedAction = selectedUnit.GetBaseActionArray()[1];
+                ShowActionsForSelectedUnit();
             }
         }
         
+    }
+
+    private void ShowActionsForSelectedUnit()
+    {
+        foreach (Transform child in grupoBotones.transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+        if (selectedUnit != null)
+        {
+            BaseAction[] actions = selectedUnit.availableActions;
+
+            foreach (BaseAction action in actions)
+            {
+                CreateButton(action);
+            }
+        }
+    }
+
+    private void CreateButton(BaseAction action)
+    {
+        GameObject boton = Instantiate(prefabBoton, grupoBotones.transform);
+
+        CreateButton button = boton.GetComponent<CreateButton>();
+        button.SetBaseAction(action);
     }
 
      public void DeselectUnit()
@@ -76,25 +110,14 @@ public class UnitsController : MonoBehaviour
         {
             selectedUnit.DeselectUnit(); // Llamar al método de deselección de unidad
             selectedUnit = null;
+            
+        foreach (Transform child in grupoBotones.transform)
+            {
+                Destroy(child.gameObject);
+            }
         }
     }
 
-    public void MoveTo(GridPosition newGridPosition)
-    {
-        if (LevelGrid.Instance.IsValidGridPosition(newGridPosition))
-        {
-            // Eliminar la unidad de la posición actual en la rejilla
-            LevelGrid.Instance.RemoveUnitAtGridPosition(selectedUnit, selectedUnit.gridPosition);
-
-            // Actualizar la posición de la unidad
-            selectedUnit.gridPosition = newGridPosition;
-
-            // Agregar la unidad a la nueva posición en la rejilla
-            LevelGrid.Instance.AddUnitAtGridPosition(selectedUnit, selectedUnit.gridPosition);
-
-            // Mover la unidad a la nueva posición en el mundo
-            selectedUnit.transform.position = LevelGrid.Instance.GetWorldPosition(newGridPosition);
-        }
-    }
+    
     
 }

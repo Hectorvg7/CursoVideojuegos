@@ -33,8 +33,8 @@ public class GridSystem
 
     public GridPosition GetGridPosition(Vector3 worldPosition)
     {
-        int x = Mathf.FloorToInt(worldPosition.x / tamanoCelda);
-        int z = Mathf.FloorToInt(worldPosition.z / tamanoCelda);
+        int x = Mathf.RoundToInt(worldPosition.x / tamanoCelda);
+        int z = Mathf.RoundToInt(worldPosition.z / tamanoCelda);
         return new GridPosition(x, z);
     }
 

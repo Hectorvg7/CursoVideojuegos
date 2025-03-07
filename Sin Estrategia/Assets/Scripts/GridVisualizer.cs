@@ -27,6 +27,11 @@ public class GridVisualizer : MonoBehaviour
         gridSystem = LevelGrid.Instance.gridSystem;
     }
 
+    void Update()
+    {
+        OnDrawGizmos();
+    }
+
     void OnDrawGizmos()
     {
         if (gridSystem == null || selectedUnit == null)
