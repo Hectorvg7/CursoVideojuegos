@@ -29,6 +29,7 @@ public class CameraManager : MonoBehaviour
     {
         if (player == null)
         {
+            Debug.LogError("No se encontró al Player.");
             player = GameObject.FindGameObjectWithTag("Player");
         }
     

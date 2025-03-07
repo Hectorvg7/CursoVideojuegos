@@ -5,7 +5,7 @@ using UnityEngine;
 public class LevelGrid : MonoBehaviour
 {
     public static LevelGrid Instance { get; private set; }
-    private GridSystem gridSystem;
+    public GridSystem gridSystem;
 
     void Awake()
     {
