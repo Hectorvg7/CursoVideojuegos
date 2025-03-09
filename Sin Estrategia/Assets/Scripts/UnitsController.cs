@@ -14,16 +14,22 @@ public class UnitsController : MonoBehaviour
     public GameObject prefabBoton;
     public GameObject grupoBotones;
     private bool isBusy = false;
+    public LayerMask groundLayer;
 
     void Awake()
     {
-      Instance = this;  
+      Instance = this;
     }
 
     public void SetSelectedAction(BaseAction baseAction)
     {
         Debug.Log("Set selected action: " + baseAction.ToString());
         selectedAction = baseAction;
+    }
+
+    public void DevolverPuntos(Unit unit)
+    {
+        unit.actionPoints = unit.maxPointsPerTurn;
     }
 
     void Update()
@@ -45,15 +51,35 @@ public class UnitsController : MonoBehaviour
                 SelectUnit();
             }
 
-            //Hacer rayo a suelo
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, float.MaxValue, groundLayer))
+            {
+                var  position = hit.point;
+                GridPosition gridPosition = LevelGrid.Instance.GetGridPosition(position);
+
+                if (selectedUnit != null && selectedAction != null)
+                {
+                    if (selectedUnit.CanSpendPointsToTakeAction(selectedAction))
+                    {
+                        selectedAction.TakeAction(gridPosition, ClearBusy);
+                        selectedUnit.actionPoints -= selectedAction.GetActionPointsCost();
+                    }
+                    else 
+                    {
+                        Debug.Log("No tienes suficientes puntos para realizar la acción.");
+                    }
+                }
+            }
             //Pasar posición de mundo (Vector3) a gridPosition -> 
-            //gridPosition = LevelGrid.Instance.GetGridPosition(HierarchyType.point)
-            //selectedAction.TakeAction(gridPosition, ClearBussy);
+            //gridPosition = LevelGrid.Instance.GetGridPosition(hit.point)
+            //selectedAction.TakeAction(gridPosition, ClearBusy);
 
         }
     }
 
-    private void ClearBussy()
+    private void ClearBusy()
     {
         isBusy = false;
     }
@@ -71,7 +97,7 @@ public class UnitsController : MonoBehaviour
             {
                 selectedUnit = unit;
                 selectedUnit.SelectUnit(); // Llamar al método de selección de unidad
-                //selectedAction = selectedUnit.GetBaseActionArray()[1];
+                GridVisualizer.Instance.SetSelectedUnit(unit);
                 ShowActionsForSelectedUnit();
             }
         }

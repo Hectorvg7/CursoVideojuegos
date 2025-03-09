@@ -22,6 +22,7 @@ public class CreateButton : MonoBehaviour
         boton.onClick.AddListener(() => 
         {
             UnitsController.Instance.SetSelectedAction(baseAction);
+            /*REVISAR*/ GridVisualizer.Instance.OnDrawGizmos();
         });
     }
 

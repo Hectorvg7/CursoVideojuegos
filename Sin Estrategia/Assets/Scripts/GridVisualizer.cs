@@ -6,7 +6,7 @@ public class GridVisualizer : MonoBehaviour
     public static GridVisualizer Instance { get; private set; }
     public GameObject validMoveColor;
     public GameObject invalidMoveColor;
-    public float alturaCasilla = 0.2f;
+    public float alturaCasilla = 0.1f;
     public Quaternion rotacionCasilla = Quaternion.Euler(90f, 0f, 0f);
 
     private GridSystem gridSystem;
@@ -29,10 +29,10 @@ public class GridVisualizer : MonoBehaviour
 
     void Update()
     {
-        OnDrawGizmos();
+
     }
 
-    void OnDrawGizmos()
+    public void OnDrawGizmos()
     {
         if (gridSystem == null || selectedUnit == null)
         {
@@ -43,7 +43,8 @@ public class GridVisualizer : MonoBehaviour
         BorrarQuads();
 
         // Obtenemos el rango de movimiento de la unidad seleccionada
-        int moveRange = selectedUnit.maxPointsPerTurn; // Supongamos que el rango es igual a los puntos de movimiento
+        int moveRange = 5;
+
 
         // Iteramos por la rejilla y dibujamos solo las celdas dentro del rango de movimiento
         for (int x = 0; x < gridSystem.GetWidth(); x++)

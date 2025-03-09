@@ -27,6 +27,8 @@ public class BotonTurno : MonoBehaviour
     {
         turnoActual++;
         textoTurno.text = "TURN: " + turnoActual;
+        unitsController.DevolverPuntos(unitsController.selectedUnit);
         unitsController.DeselectUnit();
+
     }
 }

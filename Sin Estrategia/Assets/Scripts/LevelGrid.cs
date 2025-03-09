@@ -16,7 +16,7 @@ public class LevelGrid : MonoBehaviour
         }
         Instance = this;
 
-        gridSystem = new GridSystem(7, 14, 1f);
+        gridSystem = new GridSystem(14, 7, 2f);
     }
 
 

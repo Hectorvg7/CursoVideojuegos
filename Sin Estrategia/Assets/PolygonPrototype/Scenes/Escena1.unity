@@ -773,7 +773,7 @@ GameObject:
   - component: {fileID: 446825113}
   - component: {fileID: 446825112}
   - component: {fileID: 446825116}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1334,7 +1334,7 @@ MonoBehaviour:
     type: 3}
   invalidMoveColor: {fileID: 2268762115062127817, guid: 1278f29ba5a7f0841a730bcdef2862ca,
     type: 3}
-  alturaCasilla: 0.2
+  alturaCasilla: 0.1
   rotacionCasilla: {x: 0.70710677, y: 0, z: 0, w: 0.70710677}
 --- !u!224 &1008241118 stripped
 RectTransform:
@@ -2474,6 +2474,9 @@ MonoBehaviour:
   prefabBoton: {fileID: 5219558517445645152, guid: 52645448eb563288797839c143da114b,
     type: 3}
   grupoBotones: {fileID: 1348072816}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!4 &1834096722
 Transform:
   m_ObjectHideFlags: 0
@@ -4356,6 +4359,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CasillaValida
       objectReference: {fileID: 0}
+    - target: {fileID: 821052267358588316, guid: 45de950e6ff92b34c80c38acb6210763,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4693960014379740412, guid: 45de950e6ff92b34c80c38acb6210763,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4473,6 +4481,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: CasillaInvalida
+      objectReference: {fileID: 0}
+    - target: {fileID: 2268762115062127817, guid: 1278f29ba5a7f0841a730bcdef2862ca,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

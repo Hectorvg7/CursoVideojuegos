@@ -11,12 +11,15 @@ public class Unit : MonoBehaviour
     public BaseAction[] availableActions;
 
     public GameObject quads;
+    private Animator animator;
 
     private bool isSelected = false;
+    private bool isMoving = false;
 
     void Awake()
     {
         availableActions = GetComponents<BaseAction>();
+        animator = GetComponent<Animator>();
         actionPoints = maxPointsPerTurn;
         quads.SetActive(false);
     }
@@ -25,7 +28,6 @@ public class Unit : MonoBehaviour
     {
         isSelected = true;
         quads.SetActive(true);
-        
     }
 
     public void DeselectUnit()
@@ -59,18 +61,18 @@ public class Unit : MonoBehaviour
         actionPoints = maxPointsPerTurn;
     }
 
-    public void TryTakeAction(BaseAction action)
+     // Método para indicar si la unidad se está moviendo
+    public void StartMoving()
     {
-        if (CanSpendPointsToTakeAction(action))
-        {
-            action.TakeAction(gridPosition, ClearBusy);
-            actionPoints -= action.GetActionPointsCost();
-        } 
-        else 
-        {
-            Debug.Log("No tienes suficientes puntos para realizar la acción.");
-        }
+        isMoving = true;
+        // Cambiar el parámetro del Animator para indicar que la unidad se mueve
+        animator.SetBool("isMoving", true);
     }
 
-    private void ClearBusy(){}
+    public void StopMoving()
+    {
+        isMoving = false;
+        // Cambiar el parámetro del Animator para indicar que la unidad está parada
+        animator.SetBool("isMoving", false);
+    }
 }
