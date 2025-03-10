@@ -15,22 +15,20 @@ public class UnitsController : MonoBehaviour
     public GameObject grupoBotones;
     private bool isBusy = false;
     public LayerMask groundLayer;
+    public LayerMask unitLayer;
 
+    //Pintar casillas disponibles
+    public GameObject validMoveColor;
+    public GameObject invalidMoveColor;
+    private float alturaCasilla = 0.1f;
+    private Quaternion rotacionCasilla = Quaternion.Euler(90f, 0f, 0f);
+    private GridSystem gridSystem;
     void Awake()
     {
       Instance = this;
+      gridSystem = LevelGrid.Instance.gridSystem;
     }
 
-    public void SetSelectedAction(BaseAction baseAction)
-    {
-        Debug.Log("Set selected action: " + baseAction.ToString());
-        selectedAction = baseAction;
-    }
-
-    public void DevolverPuntos(Unit unit)
-    {
-        unit.actionPoints = unit.maxPointsPerTurn;
-    }
 
     void Update()
     {
@@ -72,12 +70,16 @@ public class UnitsController : MonoBehaviour
                     }
                 }
             }
-            //Pasar posición de mundo (Vector3) a gridPosition -> 
-            //gridPosition = LevelGrid.Instance.GetGridPosition(hit.point)
-            //selectedAction.TakeAction(gridPosition, ClearBusy);
-
         }
     }
+
+
+    public void SetSelectedAction(BaseAction baseAction)
+    {
+        Debug.Log("Set selected action: " + baseAction.ToString());
+        selectedAction = baseAction;
+    }
+
 
     private void ClearBusy()
     {
@@ -90,18 +92,78 @@ public class UnitsController : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit, float.MaxValue, unitLayer))
         {
             Unit unit = hit.collider.GetComponent<Unit>();
             if (unit != null)
             {
                 selectedUnit = unit;
                 selectedUnit.SelectUnit(); // Llamar al método de selección de unidad
-                GridVisualizer.Instance.SetSelectedUnit(unit);
                 ShowActionsForSelectedUnit();
+                PintarCasillas();
             }
         }
+    }
+
+    public void DeselectUnit()
+    {
+        if (selectedUnit != null)
+        {
+            selectedUnit.DeselectUnit(); // Llamar al método de deselección de unidad
+            selectedUnit = null;
+            BorrarQuads();
+            
+        foreach (Transform child in grupoBotones.transform)
+            {
+                Destroy(child.gameObject);
+            }
+        }
+    }
+
+    public void PintarCasillas()
+    {
         
+        // Limpiar cualquier quad instanciado.
+        BorrarQuads();
+
+        // Obtenemos el rango de movimiento de la unidad seleccionada
+        int moveRange = 20;
+
+
+        // Iteramos por la rejilla y dibujamos solo las celdas dentro del rango de movimiento
+        for (int x = 0; x < gridSystem.GetWidth(); x++)
+        {
+            for (int z = 0; z < gridSystem.GetHeight(); z++)
+            {
+                GridPosition gridPosition = new GridPosition(x, z);
+                GridObject gridObject = gridSystem.GetGridObject(gridPosition);
+
+                if (gridObject == null) continue;
+
+                // Comprobar si la celda está dentro del rango de movimiento
+                int distance = Mathf.Abs(gridPosition.x - selectedUnit.GetGridPosition().x) + Mathf.Abs(gridPosition.z - selectedUnit.GetGridPosition().z);
+                bool isValidMove = distance <= moveRange;
+
+                GameObject casilla = isValidMove ? validMoveColor : invalidMoveColor;
+
+                // Instanciar el prefab en la posición correspondiente
+                Vector3 position = LevelGrid.Instance.GetWorldPosition(gridPosition) + new Vector3(0f, alturaCasilla, 0f);
+                if (casilla != null)
+                {
+                    Instantiate(casilla, position, rotacionCasilla);
+                }
+            }
+        }
+    }
+
+    public void BorrarQuads()
+    {
+        GameObject[] antiguosQuads = GameObject.FindGameObjectsWithTag("MoveQuad");
+
+        foreach (var quad in antiguosQuads)
+        {
+            Destroy(quad);
+        }
     }
 
     private void ShowActionsForSelectedUnit()
@@ -130,20 +192,16 @@ public class UnitsController : MonoBehaviour
         button.SetBaseAction(action);
     }
 
-     public void DeselectUnit()
+
+
+
+    public void DevolverPuntos(Unit unit)
     {
-        if (selectedUnit != null)
+        if (unit != null)
         {
-            selectedUnit.DeselectUnit(); // Llamar al método de deselección de unidad
-            selectedUnit = null;
-            
-        foreach (Transform child in grupoBotones.transform)
-            {
-                Destroy(child.gameObject);
-            }
+            unit.actionPoints = unit.maxPointsPerTurn;
         }
     }
-
     
     
 }

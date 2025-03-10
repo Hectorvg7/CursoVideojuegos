@@ -22,7 +22,6 @@ public class CameraController : MonoBehaviour
     void Awake()
     {
         transposer = virtualCamera.GetCinemachineComponent<CinemachineTransposer>();
-        transposer.m_FollowOffset.y = 7f;
         targetOffsetValue = transposer.m_FollowOffset.y;
     }
 
@@ -48,7 +47,7 @@ public class CameraController : MonoBehaviour
         //Mover hacia delante.
         if (Input.GetKey(KeyCode.W))
         {
-            movement.y = 10;
+            movement.x = 10;
             ApplyMovement();
             ReiniciarMovement();
         }
@@ -56,7 +55,7 @@ public class CameraController : MonoBehaviour
         //Mover hacia detrás.
         if (Input.GetKey(KeyCode.S))
         {
-            movement.y = -10;
+            movement.x = -10;
             ApplyMovement();
             ReiniciarMovement();
         }
@@ -64,7 +63,7 @@ public class CameraController : MonoBehaviour
         //Mover hacia la izquierda.
         if (Input.GetKey(KeyCode.A))
         {
-            movement.x = -10;
+            movement.y = 10;
             ApplyMovement();
             ReiniciarMovement();
         }
@@ -73,7 +72,7 @@ public class CameraController : MonoBehaviour
         //Mover hacia la derecha.
         if (Input.GetKey(KeyCode.D))
         {
-            movement.x = 10;
+            movement.y = -10;
             ApplyMovement();
             ReiniciarMovement();
         }

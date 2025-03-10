@@ -82,10 +82,5 @@ public class GridVisualizer : MonoBehaviour
         }
     }
 
-    // Llamado para actualizar la unidad seleccionada
-    public void SetSelectedUnit(Unit unit)
-    {
-        selectedUnit = unit;
-    }
 }
 

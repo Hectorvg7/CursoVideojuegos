@@ -6,6 +6,8 @@ using UnityEngine.AI;
 
 public class MoveAction : BaseAction
 {
+
+    
     public override string GetActionName()
     {
         return "Move";
@@ -28,8 +30,29 @@ public class MoveAction : BaseAction
 
         unit.StartMoving();
         MoveTo(gridPosition);
-        onActionComplete = unit.StopMoving;
+
+        //Lógica para parar la transición.
+        // Comienza a verificar si el agente ha llegado a su destino
+        StartCoroutine(WaitUntilArrived());
     }
+
+    private IEnumerator WaitUntilArrived()
+    {
+        NavMeshAgent agente = unit.GetComponent<NavMeshAgent>();
+        
+        // Esperar hasta que el agente llegue a su destino
+        while (agente.pathPending || agente.remainingDistance > 0.1f)
+        {
+            yield return null; // Espera un frame
+        }
+
+        // Una vez que el agente ha llegado a su destino, detener la animación de movimiento y volver a pintar las casillas.
+        unit.StopMoving();
+
+        // Llamar al callback cuando la acción se complete
+        onActionComplete?.Invoke();
+    }
+    
 
 
     public void MoveTo(GridPosition newGridPosition)
