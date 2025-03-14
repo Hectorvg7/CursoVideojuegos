@@ -6,6 +6,7 @@ using UnityEngine.AI;
 
 public class MoveAction : BaseAction
 {
+    private int moveRange = 5; // Limite de movimiento
 
     
     public override string GetActionName()
@@ -48,6 +49,7 @@ public class MoveAction : BaseAction
 
         // Una vez que el agente ha llegado a su destino, detener la animación de movimiento y volver a pintar las casillas.
         unit.StopMoving();
+        UnitsController.Instance.PintarCasillas();
 
         // Llamar al callback cuando la acción se complete
         onActionComplete?.Invoke();
@@ -57,7 +59,7 @@ public class MoveAction : BaseAction
 
     public void MoveTo(GridPosition newGridPosition)
     {
-        if (LevelGrid.Instance.IsValidGridPosition(newGridPosition))
+        if (LevelGrid.Instance.IsValidGridPosition(newGridPosition) && !LevelGrid.Instance.HasAnyUnitOnGridPosition(newGridPosition))
         {
             // Eliminar la unidad de la posición actual en la rejilla
             LevelGrid.Instance.RemoveUnitAtGridPosition(unit, unit.gridPosition);
@@ -68,7 +70,7 @@ public class MoveAction : BaseAction
             agente.SetDestination(targetWorldPosition);
 
             // Agregar la unidad a la nueva posición en la rejilla
-            LevelGrid.Instance.AddUnitAtGridPosition(unit, unit.gridPosition);
+            LevelGrid.Instance.AddUnitAtGridPosition(unit, newGridPosition);
         }
         else
         {

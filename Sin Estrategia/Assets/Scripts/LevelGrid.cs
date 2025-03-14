@@ -23,6 +23,7 @@ public class LevelGrid : MonoBehaviour
     public void AddUnitAtGridPosition(Unit unit, GridPosition gridPosition)
     {
         GridObject gridObject = gridSystem.GetGridObject(gridPosition);
+        unit.SetGridPosition(gridPosition);
         gridObject?.AddUnit(unit);
     }
 

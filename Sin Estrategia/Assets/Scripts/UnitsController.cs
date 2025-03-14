@@ -44,10 +44,9 @@ public class UnitsController : MonoBehaviour
                 return;
             }
 
-            if (selectedUnit == null)
-            {
-                SelectUnit();
-            }
+
+            SelectUnit();
+
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -61,8 +60,17 @@ public class UnitsController : MonoBehaviour
                 {
                     if (selectedUnit.CanSpendPointsToTakeAction(selectedAction))
                     {
-                        selectedAction.TakeAction(gridPosition, ClearBusy);
-                        selectedUnit.actionPoints -= selectedAction.GetActionPointsCost();
+                        // Verificamos si la nueva casilla está dentro del rango de 5 casillas
+                        int distance = Mathf.Abs(gridPosition.x - selectedUnit.GetGridPosition().x) + Mathf.Abs(gridPosition.z - selectedUnit.GetGridPosition().z);
+                        if (distance <= 5) // Solo permitimos el movimiento dentro de un rango de 5 casillas
+                        {
+                            selectedAction.TakeAction(gridPosition, ClearBusy);
+                            selectedUnit.actionPoints -= selectedAction.GetActionPointsCost();
+                        }
+                        else
+                        {
+                            Debug.Log("La casilla seleccionada está fuera del rango de movimiento.");
+                        }
                     }
                     else 
                     {
@@ -97,6 +105,7 @@ public class UnitsController : MonoBehaviour
             Unit unit = hit.collider.GetComponent<Unit>();
             if (unit != null)
             {
+                DeselectUnit();
                 selectedUnit = unit;
                 selectedUnit.SelectUnit(); // Llamar al método de selección de unidad
                 ShowActionsForSelectedUnit();
@@ -109,6 +118,7 @@ public class UnitsController : MonoBehaviour
     {
         if (selectedUnit != null)
         {
+            selectedAction = null;
             selectedUnit.DeselectUnit(); // Llamar al método de deselección de unidad
             selectedUnit = null;
             BorrarQuads();
@@ -127,8 +137,15 @@ public class UnitsController : MonoBehaviour
         BorrarQuads();
 
         // Obtenemos el rango de movimiento de la unidad seleccionada
-        int moveRange = 20;
+        int moveRange = 3;
 
+        if (selectedUnit == null)
+        {
+            return;
+        }
+
+        // Obtener la posición de la unidad seleccionada
+        GridPosition selectedUnitPosition = selectedUnit.GetGridPosition();
 
         // Iteramos por la rejilla y dibujamos solo las celdas dentro del rango de movimiento
         for (int x = 0; x < gridSystem.GetWidth(); x++)
@@ -141,8 +158,8 @@ public class UnitsController : MonoBehaviour
                 if (gridObject == null) continue;
 
                 // Comprobar si la celda está dentro del rango de movimiento
-                int distance = Mathf.Abs(gridPosition.x - selectedUnit.GetGridPosition().x) + Mathf.Abs(gridPosition.z - selectedUnit.GetGridPosition().z);
-                bool isValidMove = distance <= moveRange;
+                int distance = Mathf.Abs(gridPosition.x - selectedUnitPosition.x) + Mathf.Abs(gridPosition.z - selectedUnitPosition.z);
+                bool isValidMove = distance <= moveRange && !LevelGrid.Instance.HasAnyUnitOnGridPosition(gridPosition);
 
                 GameObject casilla = isValidMove ? validMoveColor : invalidMoveColor;
 
