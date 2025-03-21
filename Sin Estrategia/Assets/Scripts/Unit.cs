@@ -12,17 +12,15 @@ public class Unit : MonoBehaviour
 
     public GameObject quads;
     private Animator animator;
-    private Transform transform;
 
 
-    [SerializeField] bool isEnemy;
+    public bool isEnemy;
     private bool isSelected = false;
     private bool isMoving = false;
 
     void Awake()
     {
         availableActions = GetComponents<BaseAction>();
-        transform = GetComponent<Transform>();
         animator = GetComponent<Animator>();
         actionPoints = maxPointsPerTurn;
         quads.SetActive(false);
@@ -89,5 +87,10 @@ public class Unit : MonoBehaviour
         isMoving = false;
         // Cambiar el parámetro del Animator para indicar que la unidad está parada
         animator.SetBool("isMoving", false);
+    }
+
+    public void Shoot()
+    {
+        animator.SetTrigger("Shoot");
     }
 }

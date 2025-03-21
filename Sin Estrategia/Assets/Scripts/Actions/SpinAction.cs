@@ -29,6 +29,7 @@ public class SpinAction : BaseAction
         isActive = true;
         this.onActionComplete = onActionComplete;
         totalSpinAmount = 0;
+        unit.actionPoints -= GetActionPointsCost();
     }
 
     public override string GetActionName()

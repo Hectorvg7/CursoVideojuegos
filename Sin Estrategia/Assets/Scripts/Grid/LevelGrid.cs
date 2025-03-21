@@ -59,6 +59,22 @@ public class LevelGrid : MonoBehaviour
         return GetUnitListAtGridPosition(gridPosition).Count > 0;
     }
 
+    public bool HasAnyEnemyUnitOnGridPosition(GridPosition gridPosition)
+    {
+        if(!HasAnyUnitOnGridPosition(gridPosition)) return false;
+
+        List<Unit> units = GetUnitListAtGridPosition(gridPosition);
+        foreach (Unit unit in units)
+        {
+            if (unit.isEnemy)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 
     public bool IsValidGridPosition(GridPosition gridPosition)
     {

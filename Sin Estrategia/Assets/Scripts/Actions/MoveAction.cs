@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 public class MoveAction : BaseAction
 {
-    private int moveRange = 5; // Limite de movimiento
+    private int moveRange = 3; // Limite de movimiento
 
     
     public override string GetActionName()
@@ -28,13 +28,23 @@ public class MoveAction : BaseAction
     {
         isActive = true;
         this.onActionComplete = onActionComplete;
+        
+        // Verificamos si la nueva casilla está dentro del rango de 5 casillas
+        int distance = Mathf.Abs(gridPosition.x - unit.GetGridPosition().x) + Mathf.Abs(gridPosition.z - unit.GetGridPosition().z);
+        if (distance <= moveRange) // Solo permitimos el movimiento dentro de un rango de 5 casillas
+        {
+            unit.StartMoving();
+            MoveTo(gridPosition);
 
-        unit.StartMoving();
-        MoveTo(gridPosition);
-
-        //Lógica para parar la transición.
-        // Comienza a verificar si el agente ha llegado a su destino
-        StartCoroutine(WaitUntilArrived());
+            //Lógica para parar la transición.
+            // Comienza a verificar si el agente ha llegado a su destino
+            StartCoroutine(WaitUntilArrived());
+            unit.actionPoints -= GetActionPointsCost();
+        }
+        else
+        {
+            Debug.Log("La casilla seleccionada está fuera del rango de movimiento.");
+        }
     }
 
     private IEnumerator WaitUntilArrived()

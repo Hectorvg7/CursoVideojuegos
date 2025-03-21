@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -23,6 +24,12 @@ public class UnitsController : MonoBehaviour
     private float alturaCasilla = 0.1f;
     private Quaternion rotacionCasilla = Quaternion.Euler(90f, 0f, 0f);
     private GridSystem gridSystem;
+
+
+    //Sistema de eventos
+    public event EventHandler OnActionSelected;
+
+
     void Awake()
     {
       Instance = this;
@@ -60,17 +67,7 @@ public class UnitsController : MonoBehaviour
                 {
                     if (selectedUnit.CanSpendPointsToTakeAction(selectedAction))
                     {
-                        // Verificamos si la nueva casilla está dentro del rango de 5 casillas
-                        int distance = Mathf.Abs(gridPosition.x - selectedUnit.GetGridPosition().x) + Mathf.Abs(gridPosition.z - selectedUnit.GetGridPosition().z);
-                        if (distance <= 5) // Solo permitimos el movimiento dentro de un rango de 5 casillas
-                        {
-                            selectedAction.TakeAction(gridPosition, ClearBusy);
-                            selectedUnit.actionPoints -= selectedAction.GetActionPointsCost();
-                        }
-                        else
-                        {
-                            Debug.Log("La casilla seleccionada está fuera del rango de movimiento.");
-                        }
+                        selectedAction.TakeAction(gridPosition, ClearBusy);
                     }
                     else 
                     {
@@ -109,7 +106,6 @@ public class UnitsController : MonoBehaviour
                 selectedUnit = unit;
                 selectedUnit.SelectUnit(); // Llamar al método de selección de unidad
                 ShowActionsForSelectedUnit();
-                PintarCasillas();
             }
         }
     }
@@ -136,8 +132,7 @@ public class UnitsController : MonoBehaviour
         // Limpiar cualquier quad instanciado.
         BorrarQuads();
 
-        // Obtenemos el rango de movimiento de la unidad seleccionada
-        int moveRange = 3;
+        int rango = 3;
 
         if (selectedUnit == null)
         {
@@ -159,8 +154,19 @@ public class UnitsController : MonoBehaviour
 
                 // Comprobar si la celda está dentro del rango de movimiento
                 int distance = Mathf.Abs(gridPosition.x - selectedUnitPosition.x) + Mathf.Abs(gridPosition.z - selectedUnitPosition.z);
-                bool isValidMove = distance <= moveRange && !LevelGrid.Instance.HasAnyUnitOnGridPosition(gridPosition);
-
+                bool isValidMove = false;
+                
+                if (selectedAction.GetActionName() == "Move")
+                {
+                    rango = 3;
+                    isValidMove = distance <= rango && !LevelGrid.Instance.HasAnyUnitOnGridPosition(gridPosition);
+                }
+                else if (selectedAction.GetActionName() == "Shoot")
+                {
+                    rango = 2;
+                    isValidMove = distance <= rango && LevelGrid.Instance.HasAnyEnemyUnitOnGridPosition(gridPosition);
+                }
+                
                 GameObject casilla = isValidMove ? validMoveColor : invalidMoveColor;
 
                 // Instanciar el prefab en la posición correspondiente
@@ -171,6 +177,11 @@ public class UnitsController : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void ActionButton_OnActionSelected()
+    {
+        PintarCasillas();
     }
 
     public void BorrarQuads()
