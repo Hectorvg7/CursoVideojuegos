@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -5,13 +6,15 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
-    public int maxPointsPerTurn = 4;
+    public int maxPointsPerTurn = 10;
     public int actionPoints;
+    public int health;
     public GridPosition gridPosition;
     public BaseAction[] availableActions;
 
     public GameObject quads;
     private Animator animator;
+    private HealthSystem healthSystem;
 
 
     public bool isEnemy;
@@ -24,6 +27,8 @@ public class Unit : MonoBehaviour
         animator = GetComponent<Animator>();
         actionPoints = maxPointsPerTurn;
         quads.SetActive(false);
+        healthSystem = GetComponent<HealthSystem>();
+        healthSystem.OnDamage += HealthSystem_OnDamage;
     }
 
     void Start()
@@ -92,5 +97,14 @@ public class Unit : MonoBehaviour
     public void Shoot()
     {
         animator.SetTrigger("Shoot");
+    }
+
+    public void DisminuirVida(int damageAmount)
+    {
+        healthSystem.Damage(damageAmount);
+    }
+
+    private void HealthSystem_OnDamage(object sender, EventArgs e)
+    {
     }
 }

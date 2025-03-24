@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ShootAction : BaseAction
 {
-    private int fireRange = 2; //Rango máximo de disparo
+    private int fireRange = 3; //Rango máximo de disparo
 
     public override string GetActionName()
     {
@@ -26,7 +26,6 @@ public class ShootAction : BaseAction
     {
         isActive = true;
         this.onActionComplete = onActionComplete;
-        UnitsController.Instance.PintarCasillas();
 
         // Verificamos si la casilla está dentro del rango de 3 casillas
         int distance = Mathf.Abs(gridPosition.x - unit.GetGridPosition().x) + Mathf.Abs(gridPosition.z - unit.GetGridPosition().z);

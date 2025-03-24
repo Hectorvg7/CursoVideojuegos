@@ -51,9 +51,11 @@ public class UnitsController : MonoBehaviour
                 return;
             }
 
-
+        if (selectedAction == null || selectedAction.GetActionName() != "Shoot")
+        {
             SelectUnit();
-
+        }
+            
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -158,12 +160,14 @@ public class UnitsController : MonoBehaviour
                 
                 if (selectedAction.GetActionName() == "Move")
                 {
+                    Debug.Log("Acción Move en curso");
                     rango = 3;
                     isValidMove = distance <= rango && !LevelGrid.Instance.HasAnyUnitOnGridPosition(gridPosition);
                 }
                 else if (selectedAction.GetActionName() == "Shoot")
                 {
-                    rango = 2;
+                    Debug.Log("Acción Shoot en curso");
+                    rango = 3;
                     isValidMove = distance <= rango && LevelGrid.Instance.HasAnyEnemyUnitOnGridPosition(gridPosition);
                 }
                 
@@ -179,7 +183,7 @@ public class UnitsController : MonoBehaviour
         }
     }
 
-    private void ActionButton_OnActionSelected()
+    private void ActionButton_OnActionSelected(object sender, EventArgs e)
     {
         PintarCasillas();
     }
@@ -216,8 +220,9 @@ public class UnitsController : MonoBehaviour
     {
         GameObject boton = Instantiate(prefabBoton, grupoBotones.transform);
 
-        CreateButton button = boton.GetComponent<CreateButton>();
+        ActionButton button = boton.GetComponent<ActionButton>();
         button.SetBaseAction(action);
+        button.OnActionSelected += ActionButton_OnActionSelected;
     }
 
 
