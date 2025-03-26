@@ -11,7 +11,7 @@ public class CameraController : MonoBehaviour
     public CinemachineVirtualCamera virtualCamera;
     private float targetOffsetValue;
     private float rotation;
-    private float rotationSpeed = 30;
+    private float rotationSpeed = 1000;
     private Vector2 movement;
     private float movementSpeed = 10;
     [SerializeField] float zoomSpeed = 5f;
@@ -25,57 +25,41 @@ public class CameraController : MonoBehaviour
         targetOffsetValue = transposer.m_FollowOffset.y;
     }
 
-    public void OnRotate()
+    public void OnRotate(InputAction.CallbackContext input)
     {
-        //Rotar hacia la izquierda.
-        if (Input.GetKey(KeyCode.Q))
-        {
-            rotation = 90;
-            ApplyRotation();
-        }
+        rotation = input.ReadValue<float>();
 
-        //Rotar hacia la derecha.
-        if (Input.GetKey(KeyCode.E))
-        {
-            rotation = -90;
-            ApplyRotation();
-        }
+        transform.Rotate(Vector3.up, rotation * rotationSpeed * Time.deltaTime);
     }
 
-    public void OnMove()
+    public void OnMove(InputAction.CallbackContext input)
     {
-        //Mover hacia delante.
+        Vector3 moveDirection = Vector3.zero;
+
+        // Obtenemos los valores de las teclas W, A, S, D para el movimiento.
         if (Input.GetKey(KeyCode.W))
         {
-            movement.x = 10;
-            ApplyMovement();
-            ReiniciarMovement();
+            moveDirection.z = 1f; // Movimiento hacia delante
         }
 
-        //Mover hacia detrás.
         if (Input.GetKey(KeyCode.S))
         {
-            movement.x = -10;
-            ApplyMovement();
-            ReiniciarMovement();
+            moveDirection.z = -1f; // Movimiento hacia atrás
         }
 
-        //Mover hacia la izquierda.
         if (Input.GetKey(KeyCode.A))
         {
-            movement.y = 10;
-            ApplyMovement();
-            ReiniciarMovement();
+            moveDirection.x = -1f; // Movimiento hacia la izquierda
         }
 
-
-        //Mover hacia la derecha.
         if (Input.GetKey(KeyCode.D))
         {
-            movement.y = -10;
-            ApplyMovement();
-            ReiniciarMovement();
+            moveDirection.x = 1f; // Movimiento hacia la derecha
         }
+
+        // Movemos la cámara en la dirección calculada
+        float movementSpeed = 10f; // Ajusta la velocidad de movimiento
+        transform.Translate(moveDirection * movementSpeed * Time.deltaTime, Space.World);
     }
 
     public void OnZoom()

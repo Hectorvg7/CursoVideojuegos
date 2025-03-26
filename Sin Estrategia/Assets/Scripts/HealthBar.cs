@@ -10,7 +10,7 @@ public class HealthBar : MonoBehaviour
     private float currentHealth;  // Salud actual
 
     public Transform unit;
-    public Vector3 offset;
+    public Vector3 offset = new Vector3(0,2,0);
 
     // Método para inicializar la barra de salud
     void Start()
