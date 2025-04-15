@@ -9,97 +9,148 @@ public class CameraController : MonoBehaviour
 {
     private CinemachineTransposer transposer;
     public CinemachineVirtualCamera virtualCamera;
-    private float targetOffsetValue;
+    private Vector3 targetOffsetValue;
+
+    //Valores Rotación
     private float rotation;
-    private float rotationSpeed = 1000;
+    private float rotationSpeed = 100;
+    private float initialCameraPosition;
+    [SerializeField] private float angleRotationLimit = 360;
+    private float currentRotation;
+    private float minRotation = -180,
+        maxRotation = 360;
+
+    //Valores Movimiento
     private Vector2 movement;
     private float movementSpeed = 10;
-    [SerializeField] float zoomSpeed = 5f;
+    [SerializeField] float minX = 0;
+    [SerializeField] float maxX = 40;
+    [SerializeField] float minZ = 0;
+    [SerializeField] float maxZ = 40;
+
+    //Valores Zoom
+    private float zoom;
+    [SerializeField] float zoomSpeed = 10f;
     [SerializeField] float minZoom = 5f;
     [SerializeField] float maxZoom = 20f;
+
+
+    private bool isMove = false,
+        isRotate = false,
+        isZoom = false;
     [SerializeField] float smoothTime = 0.3f;
 
     void Awake()
     {
         transposer = virtualCamera.GetCinemachineComponent<CinemachineTransposer>();
-        targetOffsetValue = transposer.m_FollowOffset.y;
+        targetOffsetValue = transposer.m_FollowOffset;
+        CheckRotationLimits();
+    }
+
+    void Update()
+    {
+        Move();
+        Rotate();
+        Zoom();
+    }
+
+    private void CheckRotationLimits()
+    {
+        initialCameraPosition = transform.eulerAngles.y;
+        currentRotation = initialCameraPosition;
+        minRotation = initialCameraPosition - angleRotationLimit;
+        maxRotation = initialCameraPosition + angleRotationLimit;
     }
 
     public void OnRotate(InputAction.CallbackContext input)
     {
         rotation = input.ReadValue<float>();
+        Debug.Log("Rotation Value: " + rotation);  // Verifica que el valor está cambiando
 
-        transform.Rotate(Vector3.up, rotation * rotationSpeed * Time.deltaTime);
+        if (input.performed)
+        {
+            isRotate = true;
+        } 
+        else if (input.canceled)
+        {
+            isRotate = false;
+        }
     }
 
     public void OnMove(InputAction.CallbackContext input)
     {
-        Vector3 moveDirection = Vector3.zero;
+        movement = input.ReadValue<Vector2>();
 
-        // Obtenemos los valores de las teclas W, A, S, D para el movimiento.
-        if (Input.GetKey(KeyCode.W))
+        if (input.performed)
         {
-            moveDirection.z = 1f; // Movimiento hacia delante
+            movement.Normalize();
+            isMove = true;
         }
-
-        if (Input.GetKey(KeyCode.S))
+        else if (input.canceled)
         {
-            moveDirection.z = -1f; // Movimiento hacia atrás
+            isMove = false;
         }
-
-        if (Input.GetKey(KeyCode.A))
-        {
-            moveDirection.x = -1f; // Movimiento hacia la izquierda
-        }
-
-        if (Input.GetKey(KeyCode.D))
-        {
-            moveDirection.x = 1f; // Movimiento hacia la derecha
-        }
-
-        // Movemos la cámara en la dirección calculada
-        float movementSpeed = 10f; // Ajusta la velocidad de movimiento
-        transform.Translate(moveDirection * movementSpeed * Time.deltaTime, Space.World);
     }
 
-    public void OnZoom()
+    public void OnZoom(InputAction.CallbackContext input)
     {
-        float scrollInput = Mouse.current.scroll.ReadValue().y;
+        zoom = input.ReadValue<float>();
+        Debug.Log("Zoom Value: " + zoom);  // Verifica el valor del zoom
 
-        if (scrollInput != 0)
+        if (input.performed)
         {
-            // Calculamos el nuevo valor del zoom (modificamos el FollowOffset de la cámara)
-            targetOffsetValue -= scrollInput * zoomSpeed;
-
-            // Limitamos el zoom para que no se aleje demasiado ni se acerque demasiado
-            targetOffsetValue = Mathf.Clamp(targetOffsetValue, maxZoom, minZoom);
-            
-            // Actualizamos la distancia de la cámara con el Smooth Damp para suavizar el movimiento.
-            Vector3 currentOffset = transposer.m_FollowOffset;
-            targetOffsetValue = Mathf.SmoothDamp(currentOffset.y, targetOffsetValue, ref scrollInput, smoothTime);
-            currentOffset.y = targetOffsetValue;
-            transposer.m_FollowOffset = currentOffset;
+            isZoom = true;
         }
-
+        else if (input.canceled)
+        {
+            isZoom = false;
+        }
     }
 
-    private void ApplyRotation()
+    private void Move()
     {
-        Vector3 rotationVector = Vector3.zero;
-        rotationVector.y = rotation;
-
-        transform.eulerAngles += rotationVector * rotationSpeed * Time.deltaTime;
-    }
-
-    void ApplyMovement()
-    {
+        if (isMove)
+        {
         Vector3 worldMovement = transform.forward * movement.y + transform.right * movement.x;
-        transform.position += worldMovement * movementSpeed * Time.deltaTime;
+            transform.position += worldMovement * movementSpeed * Time.deltaTime;
+            float clampedX = Mathf.Clamp(transform.position.x, minX, maxX);
+            float clampedZ = Mathf.Clamp(transform.position.z, minZ, maxZ);
+
+            // Asignamos la nueva posición limitada (mantenemos la altura constante de la cámara)
+            transform.position = new Vector3(clampedX, transform.position.y, clampedZ);
+        }
     }
 
-    void ReiniciarMovement()
+    private void Rotate()
     {
-        movement.x = 0;
-        movement.y = 0;
+        if (isRotate)
+        {
+            currentRotation = Mathf.Clamp(
+                currentRotation - rotation * rotationSpeed * Time.deltaTime,
+                minRotation,
+                maxRotation
+            );
+
+            transform.eulerAngles = new Vector3(
+                transform.eulerAngles.x,
+                currentRotation,
+                transform.eulerAngles.z
+            );
+        }
+    }
+
+    private void Zoom()
+    {
+        if (isZoom)
+        {
+            // Ajusta la distancia de la cámara modificando el FollowOffset
+            float newCameraDistance = transposer.m_FollowOffset.z - zoom * zoomSpeed * Time.deltaTime;
+            
+            // Limita la distancia de la cámara
+            newCameraDistance = Mathf.Clamp(newCameraDistance, minZoom, maxZoom);
+            
+            // Asigna el nuevo valor de distancia a la cámara
+            transposer.m_FollowOffset = new Vector3(transposer.m_FollowOffset.x, targetOffsetValue.y, newCameraDistance);
+        }
     }
 }
