@@ -20,7 +20,7 @@ public class HealthBar : MonoBehaviour
 
     void Update()
     {
-      transform.position = unit.position + offset;  
+        transform.position = unit.position + offset;  
     }
 
     // Método para aplicar daño
