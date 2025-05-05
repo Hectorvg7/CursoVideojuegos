@@ -6,6 +6,7 @@ TagManager:
   tags:
   - MoveQuad
   - Unit
+  - EnemyUnit
   layers:
   - Default
   - TransparentFX

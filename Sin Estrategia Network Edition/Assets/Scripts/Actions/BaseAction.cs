@@ -30,4 +30,9 @@ public abstract class BaseAction : MonoBehaviour
     {
         return 1;
     }
+
+    public virtual EnemyAIAction GetBestEnemyAIAction()
+    {
+        return null;
+    }
 }

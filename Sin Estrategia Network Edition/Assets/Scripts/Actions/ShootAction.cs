@@ -6,6 +6,7 @@ using UnityEngine;
 public class ShootAction : BaseAction
 {
     private int fireRange = 3; //Rango máximo de disparo
+    private int fireDamage = 25;
     [SerializeField] private GameObject bulletPrefab;
 
     public override string GetActionName()
@@ -53,8 +54,6 @@ public class ShootAction : BaseAction
 
             if (targetUnit != null)
             {
-                Debug.Log("Has disparado");
-
                 // Instanciar la bala en la punta del rifle
                 Transform muzzleTransform = unit.GetRifleMuzzle();
                 GameObject bulletGO = GameObject.Instantiate(bulletPrefab, muzzleTransform.position, Quaternion.identity);
@@ -64,7 +63,7 @@ public class ShootAction : BaseAction
                 bullet.SetTarget(targetUnit.transform.position);
 
                 unit.actionPoints -= GetActionPointsCost();
-                targetUnit.DisminuirVida(25);
+                targetUnit.DisminuirVida(fireDamage);
             }
         }
         else
@@ -72,4 +71,32 @@ public class ShootAction : BaseAction
             Debug.Log("La casilla no es válida.");
         }
     }
+
+    public override EnemyAIAction GetBestEnemyAIAction()
+    {
+        List<GridPosition> validPositions = LevelGrid.Instance.GetValidActionsGridPositionsList();
+        EnemyAIAction bestAction = null;
+
+        foreach (GridPosition targetPosition in validPositions)
+        {
+            Unit targetUnit = LevelGrid.Instance.GetUnitListAtGridPosition(targetPosition)[0];
+            int score = 100; // por defecto, disparar es bueno
+            if (targetUnit != null && !targetUnit.isEnemy)
+            {
+                score += 10; // bonificación si el objetivo tiene poca vida, etc.
+            }
+
+            if (bestAction == null || score > bestAction.actionValue)
+            {
+                bestAction = new EnemyAIAction
+                {
+                    gridPosition = targetPosition,
+                    actionValue = score
+                };
+            }
+        }
+
+        return bestAction;
+    }
+
 }

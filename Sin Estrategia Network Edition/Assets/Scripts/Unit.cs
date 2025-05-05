@@ -22,6 +22,9 @@ public class Unit : MonoBehaviour
     [SerializeField] private Transform rifleMuzzle;
     public Transform GetRifleMuzzle() => rifleMuzzle;
 
+    public GameObject ragdollAllyPrefab;
+    public GameObject ragdollEnemyPrefab;
+
 
     public bool isEnemy;
     private bool isSelected = false;
@@ -35,11 +38,12 @@ public class Unit : MonoBehaviour
         quads.SetActive(false);
         healthSystem = GetComponent<HealthSystem>();
         healthSystem.OnDamage += HealthSystem_OnDamage;
+        healthSystem.OnDead += HealthSystem_OnDead;
 
         GameObject hb = Instantiate(healthBar, transform.position + offset, Quaternion.identity);
-        hb.transform.SetParent(GameObject.Find("CanvasHealth").transform); // O el canvas adecuado
+        hb.transform.SetParent(GameObject.Find("CanvasHealth").transform); // Establecer el CanvasHealth como padre.
         healthBarActions = hb.GetComponent<HealthBar>();
-        healthBarActions.Initialize(this); // Le pasamos esta unidad
+        healthBarActions.Initialize(this); // Le pasamos esta unidad.
     }
 
     void Start()
@@ -147,5 +151,21 @@ public class Unit : MonoBehaviour
 
     private void HealthSystem_OnDamage(object sender, EventArgs e)
     {
+
+    }
+
+    private void HealthSystem_OnDead(object sender, EventArgs e)
+    {
+        LevelGrid.Instance.RemoveUnitAtGridPosition(this, gridPosition);
+
+        // Instanciar el ragdoll correspondiente según la facción
+        GameObject ragdollPrefab = isEnemy ? ragdollEnemyPrefab : ragdollAllyPrefab;
+        if (ragdollPrefab != null)
+        {
+            Instantiate(ragdollPrefab, transform.position, transform.rotation);
+        }
+
+        // Destruir la unidad
+        Destroy(gameObject);
     }
 }

@@ -88,4 +88,28 @@ public class MoveAction : BaseAction
         }
     }
 
+    public override EnemyAIAction GetBestEnemyAIAction()
+    {
+        List<GridPosition> validPositions = LevelGrid.Instance.GetValidActionsGridPositionsList();
+        EnemyAIAction bestAction = null;
+
+        foreach (GridPosition targetPosition in validPositions)
+        {
+            int score = -Mathf.RoundToInt(Vector3.Distance(
+                LevelGrid.Instance.GetWorldPosition(targetPosition), Vector3.zero));
+                // *FALTA IMPLEMENTAR* PlayerUnitManager.Instance.GetClosestPlayerUnit().transform.position));
+
+            if (bestAction == null || score > bestAction.actionValue)
+            {
+                bestAction = new EnemyAIAction
+                {
+                    gridPosition = targetPosition,
+                    actionValue = score
+                };
+            }
+        }
+
+        return bestAction;
+    }
+
 }

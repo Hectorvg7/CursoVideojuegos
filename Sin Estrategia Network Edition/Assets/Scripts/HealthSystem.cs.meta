@@ -3,7 +3,9 @@ guid: fe28ad0354b1257a2b0c4021976460b3
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - ragdollPrefab: {fileID: 1477909114877994926, guid: c4b3452612eca6482be2077a11024e31,
+      type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

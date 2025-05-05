@@ -8,14 +8,24 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1439544616107166886, guid: 24bd165ba5810ef4c82cdd4924fb25b3,
+        type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 3053693649
+      objectReference: {fileID: 0}
     - target: {fileID: 1477909114877994926, guid: 24bd165ba5810ef4c82cdd4924fb25b3,
         type: 3}
       propertyPath: m_Name
       value: UnitEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 1477909114877994926, guid: 24bd165ba5810ef4c82cdd4924fb25b3,
+        type: 3}
+      propertyPath: m_TagString
+      value: EnemyUnit
+      objectReference: {fileID: 0}
     - target: {fileID: 2119764299194553202, guid: 24bd165ba5810ef4c82cdd4924fb25b3,
         type: 3}
-      propertyPath: m_Materials.Array.data[0]
+      propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 7d22fc6b9a431b043a917fb89a80bcfc, type: 2}
     - target: {fileID: 7175926053855224574, guid: 24bd165ba5810ef4c82cdd4924fb25b3,

@@ -376,7 +376,12 @@ MonoBehaviour:
   quads: {fileID: 4484935497968842691}
   healthBar: {fileID: 8560390143429087468, guid: a9d6d1a4cc5efd730b6219b13a990d37,
     type: 3}
+  offset: {x: 0, y: 2, z: 0}
   rifleMuzzle: {fileID: 2405619838893509435}
+  ragdollAllyPrefab: {fileID: 1477909114877994926, guid: c4b3452612eca6482be2077a11024e31,
+    type: 3}
+  ragdollEnemyPrefab: {fileID: 6312239968334521165, guid: 4145e025a8edb8e5da6bcd50e951d16f,
+    type: 3}
   isEnemy: 0
 --- !u!65 &1656775709214887757
 BoxCollider:
@@ -577,8 +582,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fcb7f75814c95ad98ec8154469ad0b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthBarPrefab: {fileID: 8560390143429087468, guid: a9d6d1a4cc5efd730b6219b13a990d37,
-    type: 3}
   maxHealth: 100
   unit: {fileID: 0}
   offset: {x: 0, y: 2, z: 0}

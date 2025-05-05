@@ -9,27 +9,44 @@ public class BotonTurno : MonoBehaviour
     private int turnoActual;
     [SerializeField] UnitsController unitsController;
 
-    void Awake()
+    void Start()
     {
-        turnoActual = 1;
+        TurnSystem.Instance.OnTurnChanged += TurnSystem_OnTurnChanged;
+        UpdateTurnText();
     }
 
-    // Update is called once per frame
-    void Update()
+
+    private void TurnSystem_OnTurnChanged(object sender, System.EventArgs e)
     {
-        if (unitsController.selectedUnit != null && unitsController.selectedUnit.actionPoints < 1)
+        UpdateTurnText();
+
+        if (TurnSystem.Instance.IsPlayerTurn())
         {
-            AcabarTurno();
+            // Reiniciar puntos de acción a todas las unidades del jugador
+            foreach (Unit unit in UnitsController.Instance.GetUnitsList())
+            {
+                unit.ResetActionPoints(); // Suponiendo que este método ya existe en Unit
+            }
+
+            // Limpiar selección y UI del turno anterior
+            unitsController.DeselectUnit();
+            unitsController.BorrarQuads();
         }
+    }
+
+    private void UpdateTurnText()
+    {
+        string turnoJugador = TurnSystem.Instance.IsPlayerTurn() ? "Player" : "Enemy";
+        textoTurno.text = "TURN: " + TurnSystem.Instance.GetTurnNumber() + " - " + turnoJugador;
     }
 
     public void AcabarTurno()
     {
-        turnoActual++;
-        textoTurno.text = "TURN: " + turnoActual;
-        unitsController.DevolverPuntos(unitsController.selectedUnit);
-        unitsController.DeselectUnit();
-        unitsController.BorrarQuads();
+        TurnSystem.Instance.NextTurn(); // Ahora delegamos al TurnSystem
+    }
 
+    private void OnDestroy()
+    {
+        TurnSystem.Instance.OnTurnChanged -= TurnSystem_OnTurnChanged;
     }
 }

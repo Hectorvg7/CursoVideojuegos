@@ -171,8 +171,6 @@ public class CameraController : MonoBehaviour
 
             // Asignamos el nuevo FollowOffset
             transposer.FollowOffset = new Vector3(newFollowOffset.x, newFollowOffset.y, newFollowOffset.z);
-
-            Debug.Log("New FollowOffset: " + transposer.FollowOffset); // Verifica el nuevo FollowOffs
         }
     }
 }

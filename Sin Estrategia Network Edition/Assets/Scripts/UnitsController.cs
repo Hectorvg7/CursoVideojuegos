@@ -17,6 +17,8 @@ public class UnitsController : MonoBehaviour
     private bool isBusy = false;
     public LayerMask groundLayer;
     public LayerMask unitLayer;
+    private List<Unit> unitsList = new List<Unit>();
+    private List<Unit> enemyUnitsList = new List<Unit>();
 
     //Pintar casillas disponibles
     public GameObject validMoveColor;
@@ -46,16 +48,15 @@ public class UnitsController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
+            if (selectedAction == null || selectedAction.GetActionName() != "Shoot")
+            {
+                SelectUnit();
+            }
+
             if (EventSystem.current.IsPointerOverGameObject())
             {
                 return;
             }
-
-        if (selectedAction == null || selectedAction.GetActionName() != "Shoot")
-        {
-            SelectUnit();
-        }
-            
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -126,6 +127,42 @@ public class UnitsController : MonoBehaviour
                 Destroy(child.gameObject);
             }
         }
+    }
+
+    public List<Unit> GetUnitsList()
+    {
+        unitsList.Clear();
+
+        GameObject[] unidadesEncontradas = GameObject.FindGameObjectsWithTag("Unit");
+
+        foreach (GameObject unidadGO in unidadesEncontradas)
+        {
+            Unit unidad = unidadGO.GetComponent<Unit>();
+            if (unidad != null)
+            {
+                unitsList.Add(unidad);
+            }
+        }
+
+        return unitsList;
+    }
+
+        public List<Unit> GetEnemyUnitsList()
+    {
+        enemyUnitsList.Clear();
+
+        GameObject[] unidadesEncontradas = GameObject.FindGameObjectsWithTag("EnemyUnit");
+
+        foreach (GameObject unidadGO in unidadesEncontradas)
+        {
+            Unit unidad = unidadGO.GetComponent<Unit>();
+            if (unidad != null)
+            {
+                enemyUnitsList.Add(unidad);
+            }
+        }
+
+        return enemyUnitsList;
     }
 
     public void PintarCasillas()

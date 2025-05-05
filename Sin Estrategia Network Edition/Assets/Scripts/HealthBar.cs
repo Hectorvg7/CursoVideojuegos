@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
     private Image healthBarImage;
+    private TextMeshProUGUI healthBarText;
     public float maxHealth = 100f;  // Salud máxima de la unidad
     private float currentHealth;  // Salud actual
 
@@ -19,6 +21,7 @@ public class HealthBar : MonoBehaviour
         unit = owningUnit;
         currentHealth = maxHealth;
         healthBarImage = transform.GetComponent<Image>();
+        healthBarText = GetComponentInChildren<TextMeshProUGUI>();
         UpdateHealthBar();
     }
 
@@ -54,7 +57,12 @@ public class HealthBar : MonoBehaviour
         float healthPercentage = currentHealth / maxHealth;
 
         // Actualizamos el valor de la barra de salud
-        Image healthBarImagen = transform.GetComponent<Image>();
-        healthBarImagen.fillAmount = healthPercentage;
+        healthBarImage.fillAmount = healthPercentage;
+        healthBarText.text = currentHealth.ToString();
+
+        if (currentHealth <= 0)
+        {
+            healthBarText.text = "";
+        }
     }
 }
