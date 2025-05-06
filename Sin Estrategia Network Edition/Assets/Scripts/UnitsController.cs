@@ -198,13 +198,11 @@ public class UnitsController : MonoBehaviour
                 if (selectedAction.GetActionName() == "Move")
                 {
                     Debug.Log("Acción Move en curso");
-                    rango = 3;
                     isValidMove = distance <= rango && !LevelGrid.Instance.HasAnyUnitOnGridPosition(gridPosition);
                 }
                 else if (selectedAction.GetActionName() == "Shoot")
                 {
                     Debug.Log("Acción Shoot en curso");
-                    rango = 3;
                     isValidMove = distance <= rango && LevelGrid.Instance.HasAnyEnemyUnitOnGridPosition(gridPosition);
                 }
                 

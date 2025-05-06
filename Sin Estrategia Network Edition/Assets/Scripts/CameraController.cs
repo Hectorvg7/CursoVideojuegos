@@ -59,7 +59,6 @@ public class CameraController : MonoBehaviour
     public void OnRotate(InputAction.CallbackContext input)
     {
         rotation = input.ReadValue<float>();
-        Debug.Log("Rotation Value: " + rotation);  // Verifica que el valor está cambiando
 
         if (input.performed)
         {
@@ -89,7 +88,6 @@ public class CameraController : MonoBehaviour
     public void OnZoom(InputAction.CallbackContext input)
     {
         zoom = input.ReadValue<float>();
-        Debug.Log("Zoom Value: " + zoom);  // Verifica el valor del zoom
 
         if (input.performed)
         {
