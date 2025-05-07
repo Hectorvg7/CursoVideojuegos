@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnemyAIAction : MonoBehaviour
+public class EnemyAIAction
 {
     public GridPosition gridPosition;
     public int actionValue;

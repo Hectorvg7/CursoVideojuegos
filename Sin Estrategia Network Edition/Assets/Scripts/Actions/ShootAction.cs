@@ -48,54 +48,83 @@ public class ShootAction : BaseAction
 
     public void ShootTo(GridPosition newGridPosition)
     {
-        if (LevelGrid.Instance.IsValidGridPosition(newGridPosition) && LevelGrid.Instance.HasAnyEnemyUnitOnGridPosition(newGridPosition))
+        //Turno del Player
+        if (TurnSystem.Instance.IsPlayerTurn())
         {
-            Unit targetUnit = LevelGrid.Instance.GetUnitListAtGridPosition(newGridPosition)[0];
-
-            if (targetUnit != null)
+            if (LevelGrid.Instance.IsValidGridPosition(newGridPosition) && LevelGrid.Instance.HasAnyEnemyUnitOnGridPosition(newGridPosition))
             {
-                // Instanciar la bala en la punta del rifle
-                Transform muzzleTransform = unit.GetRifleMuzzle();
-                GameObject bulletGO = GameObject.Instantiate(bulletPrefab, muzzleTransform.position, Quaternion.identity);
+                Unit targetUnit = LevelGrid.Instance.GetUnitListAtGridPosition(newGridPosition)[0];
 
-                // Mover la bala hacia la unidad enemiga
-                Bullet bullet = bulletGO.GetComponent<Bullet>();
-                bullet.SetTarget(targetUnit.transform.position);
+                if (targetUnit != null)
+                {
+                    // Instanciar la bala en la punta del rifle
+                    Transform muzzleTransform = unit.GetRifleMuzzle();
+                    GameObject bulletGO = GameObject.Instantiate(bulletPrefab, muzzleTransform.position, Quaternion.identity);
 
-                unit.actionPoints -= GetActionPointsCost();
-                targetUnit.DisminuirVida(fireDamage);
+                    // Mover la bala hacia la unidad enemiga
+                    Bullet bullet = bulletGO.GetComponent<Bullet>();
+                    bullet.SetTarget(targetUnit.transform.position);
+
+                    unit.actionPoints -= GetActionPointsCost();
+                    targetUnit.DisminuirVida(fireDamage);
+                }
+            }
+            else
+            {
+                Debug.Log("La casilla no es válida.");
             }
         }
+        //Turno de EnemyAI
         else
         {
-            Debug.Log("La casilla no es válida.");
+            if (LevelGrid.Instance.IsValidGridPosition(newGridPosition) && LevelGrid.Instance.HasAnyUnitOnGridPosition(newGridPosition))
+            {
+                Unit targetUnit = LevelGrid.Instance.GetUnitListAtGridPosition(newGridPosition)[0];
+
+                if (targetUnit != null)
+                {
+                    // Instanciar la bala en la punta del rifle
+                    Transform muzzleTransform = unit.GetRifleMuzzle();
+                    GameObject bulletGO = GameObject.Instantiate(bulletPrefab, muzzleTransform.position, Quaternion.identity);
+
+                    // Mover la bala hacia la unidad enemiga
+                    Bullet bullet = bulletGO.GetComponent<Bullet>();
+                    bullet.SetTarget(targetUnit.transform.position);
+
+                    unit.actionPoints -= GetActionPointsCost();
+                    targetUnit.DisminuirVida(fireDamage);
+                }
+            }
         }
     }
 
     public override EnemyAIAction GetBestEnemyAIAction()
     {
-        List<GridPosition> validPositions = LevelGrid.Instance.GetValidActionsGridPositionsList();
         EnemyAIAction bestAction = null;
 
-        foreach (GridPosition targetPosition in validPositions)
+        // Obtener todas las unidades aliadas del mapa (enemigo solo dispara a aliados)
+        List<Unit> allUnits = UnitsController.Instance.GetUnitsList();
+        foreach (Unit targetUnit in allUnits)
         {
-            Unit targetUnit = LevelGrid.Instance.GetUnitListAtGridPosition(targetPosition)[0];
-            int score = 100; // por defecto, disparar es bueno
-            if (targetUnit != null && !targetUnit.isEnemy)
-            {
-                score += 10; // bonificación si el objetivo tiene poca vida, etc.
-            }
+            if (targetUnit.isEnemy) continue; // Saltar enemigos (solo queremos aliados)
 
-            if (bestAction == null || score > bestAction.actionValue)
+            int distance = Mathf.Abs(targetUnit.GetGridPosition().x - unit.GetGridPosition().x) + Mathf.Abs(targetUnit.GetGridPosition().z - unit.GetGridPosition().z);
+
+            // Solo considerar si está en rango de disparo
+            if (distance <= fireRange)
             {
-                bestAction = new EnemyAIAction
+                int score = 100;
+
+                if (bestAction == null || score > bestAction.actionValue)
                 {
-                    gridPosition = targetPosition,
-                    actionValue = score
-                };
+                    bestAction = new EnemyAIAction
+                    {
+                        gridPosition = targetUnit.GetGridPosition(),
+                        actionValue = score,
+                    };
+                }
             }
         }
-
         return bestAction;
     }
 

@@ -34,16 +34,8 @@ public class EnemyAI : MonoBehaviour
                 timer -= Time.deltaTime;
                 if (timer <= 0f)
                 {
-                    if (TryExecuteEnemyAction())
-                    {
-                        state = State.Busy;
-                    }
-                    else
-                    {
-                        // Fin del turno enemigo
-                        TurnSystem.Instance.NextTurn();
-                        state = State.WaitingForEnemyTurn;
-                    }
+                    StartCoroutine(ExecuteEnemyActions());
+                    state = State.Busy;
                 }
                 break;
 
@@ -53,32 +45,54 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    private bool TryExecuteEnemyAction()
-    {
-        foreach (Unit enemyUnit in UnitsController.Instance.GetEnemyUnitsList())
+    private IEnumerator ExecuteEnemyActions()
         {
-            BaseAction bestAction = null;
-            GridPosition bestPosition = new GridPosition();
-            int bestScore = -1;
-
-            foreach (BaseAction action in enemyUnit.GetBaseActionArray())
+            foreach (Unit enemyUnit in UnitsController.Instance.GetEnemyUnitsList())
             {
-                EnemyAIAction aiAction = action.GetBestEnemyAIAction();
-                if (aiAction != null && aiAction.actionValue > bestScore)
+                // Mientras la unidad tenga puntos de acción, sigue actuando
+                while (enemyUnit.GetActionPoints() > 2)
                 {
-                    bestScore = aiAction.actionValue;
-                    bestAction = action;
-                    bestPosition = aiAction.gridPosition;
+                    BaseAction bestAction = null;
+                    GridPosition bestPosition = new GridPosition();
+                    int bestScore = -1;
+
+                    foreach (BaseAction action in enemyUnit.GetBaseActionArray())
+                    {
+                        EnemyAIAction aiAction = action.GetBestEnemyAIAction();
+                        if (aiAction != null && aiAction.actionValue > bestScore)
+                        {
+                            bestScore = aiAction.actionValue;
+                            bestAction = action;
+                            bestPosition = aiAction.gridPosition;
+                        }
+                    }
+
+                    if (bestAction != null)
+                    {
+                        bool isActionComplete = false;
+
+                        bestAction.TakeAction(bestPosition, () =>
+                        {
+                            isActionComplete = true;
+                        });
+
+                        // Esperar a que termine la acción
+                        while (!isActionComplete)
+                        {
+                            yield return null;
+                        }
+
+                        // Pequeña pausa entre acciones (opcional)
+                        yield return new WaitForSeconds(0.2f);
+                    }
+                    else
+                    {
+                        break; // No hay más acciones útiles para esta unidad
+                    }
                 }
             }
-
-            if (bestAction != null)
-            {
-                bestAction.TakeAction(bestPosition, () => { state = State.TakingTurn; });
-                return true;
-            }
+        // Cuando todas las unidades ya no pueden actuar
+        TurnSystem.Instance.NextTurn();
+        state = State.WaitingForEnemyTurn;
         }
-
-        return false;
-    }
 }

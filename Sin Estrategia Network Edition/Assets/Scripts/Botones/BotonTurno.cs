@@ -32,6 +32,12 @@ public class BotonTurno : MonoBehaviour
             unitsController.DeselectUnit();
             unitsController.BorrarQuads();
         }
+        
+        // Reiniciar puntos de acción a todas las unidades del enemigo.
+        foreach (Unit unit in UnitsController.Instance.GetEnemyUnitsList())
+            {
+                unit.ResetActionPoints(); // Suponiendo que este método ya existe en Unit
+            }
     }
 
     private void UpdateTurnText()

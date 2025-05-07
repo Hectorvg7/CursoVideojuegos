@@ -147,7 +147,7 @@ public class UnitsController : MonoBehaviour
         return unitsList;
     }
 
-        public List<Unit> GetEnemyUnitsList()
+    public List<Unit> GetEnemyUnitsList()
     {
         enemyUnitsList.Clear();
 
