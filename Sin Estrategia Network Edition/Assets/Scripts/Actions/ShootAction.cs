@@ -41,6 +41,7 @@ public class ShootAction : BaseAction
                 {
                     ShootTo(gridPosition);
                     unit.Shoot(); // animación u otros efectos
+                    onActionComplete?.Invoke();
                 });
             }
         }
@@ -48,54 +49,28 @@ public class ShootAction : BaseAction
 
     public void ShootTo(GridPosition newGridPosition)
     {
-        //Turno del Player
-        if (TurnSystem.Instance.IsPlayerTurn())
+        bool isValid = LevelGrid.Instance.IsValidGridPosition(newGridPosition);
+        bool hasTarget = TurnSystem.Instance.IsPlayerTurn()
+            ? LevelGrid.Instance.HasAnyEnemyUnitOnGridPosition(newGridPosition)
+            : LevelGrid.Instance.HasAnyUnitOnGridPosition(newGridPosition);
+
+        if (!isValid || !hasTarget)
         {
-            if (LevelGrid.Instance.IsValidGridPosition(newGridPosition) && LevelGrid.Instance.HasAnyEnemyUnitOnGridPosition(newGridPosition))
-            {
-                Unit targetUnit = LevelGrid.Instance.GetUnitListAtGridPosition(newGridPosition)[0];
-
-                if (targetUnit != null)
-                {
-                    // Instanciar la bala en la punta del rifle
-                    Transform muzzleTransform = unit.GetRifleMuzzle();
-                    GameObject bulletGO = GameObject.Instantiate(bulletPrefab, muzzleTransform.position, Quaternion.identity);
-
-                    // Mover la bala hacia la unidad enemiga
-                    Bullet bullet = bulletGO.GetComponent<Bullet>();
-                    bullet.SetTarget(targetUnit.transform.position);
-
-                    unit.actionPoints -= GetActionPointsCost();
-                    targetUnit.DisminuirVida(fireDamage);
-                }
-            }
-            else
-            {
-                Debug.Log("La casilla no es válida.");
-            }
+            Debug.Log("La casilla no es válida.");
+            return;
         }
-        //Turno de EnemyAI
-        else
-        {
-            if (LevelGrid.Instance.IsValidGridPosition(newGridPosition) && LevelGrid.Instance.HasAnyUnitOnGridPosition(newGridPosition))
-            {
-                Unit targetUnit = LevelGrid.Instance.GetUnitListAtGridPosition(newGridPosition)[0];
 
-                if (targetUnit != null)
-                {
-                    // Instanciar la bala en la punta del rifle
-                    Transform muzzleTransform = unit.GetRifleMuzzle();
-                    GameObject bulletGO = GameObject.Instantiate(bulletPrefab, muzzleTransform.position, Quaternion.identity);
+        Unit targetUnit = LevelGrid.Instance.GetUnitListAtGridPosition(newGridPosition)[0];
+        if (targetUnit == null) return;
 
-                    // Mover la bala hacia la unidad enemiga
-                    Bullet bullet = bulletGO.GetComponent<Bullet>();
-                    bullet.SetTarget(targetUnit.transform.position);
+        Transform muzzleTransform = unit.GetRifleMuzzle();
+        GameObject bulletGO = GameObject.Instantiate(bulletPrefab, muzzleTransform.position, Quaternion.identity);
 
-                    unit.actionPoints -= GetActionPointsCost();
-                    targetUnit.DisminuirVida(fireDamage);
-                }
-            }
-        }
+        Bullet bullet = bulletGO.GetComponent<Bullet>();
+        bullet.SetTarget(targetUnit.transform.position);
+
+        unit.actionPoints -= GetActionPointsCost();
+        targetUnit.DisminuirVida(fireDamage);
     }
 
     public override EnemyAIAction GetBestEnemyAIAction()

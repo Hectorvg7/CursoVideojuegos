@@ -1,0 +1,10 @@
+# ninja log v5
+1	781	1746810688178681824	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	bf0ecc757632129e
+1	829	1746810688230682059	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	bba3f965e06239fa
+1	878	1746810688278682276	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	27007f448eb248d8
+0	905	1746810688302682385	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	9af628fefba8e35d
+1	926	1746810688326682493	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	bc2cd488ecf19f47
+2	1011	1746810688406682855	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	7d1c05f844f6c3da
+1	1160	1746810688558683543	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	7e1cee7697f91414
+0	1232	1746810688630683869	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	a0fedf2be2c16e63
+1232	1261	1746810688666684032	/home/ciclost/Documentos/GitHub/CursoVideojuegos/PokeCard/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/3a2f672z/obj/arm64-v8a/libgame.so	aed763375add4ac4

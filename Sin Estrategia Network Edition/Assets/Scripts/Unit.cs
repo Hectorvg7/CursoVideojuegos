@@ -167,5 +167,7 @@ public class Unit : MonoBehaviour
 
         // Destruir la unidad
         Destroy(gameObject);
+        UnitsController.Instance.GetUnitsList();
+        UnitsController.Instance.GetEnemyUnitsList();
     }
 }

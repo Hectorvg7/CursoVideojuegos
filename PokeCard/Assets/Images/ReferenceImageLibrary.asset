@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 848409ee8ba454f42a5ddff137688a27, type: 3}
+  m_Name: ReferenceImageLibrary
+  m_EditorClassIdentifier: 
+  m_GuidLow: 5546122443829540997
+  m_GuidHigh: 3936279223203222420
+  m_DataStore:
+    m_Storage: []
+  m_Images:
+  - m_SerializedGuid:
+      m_GuidLow: 5689470096691946113
+      m_GuidHigh: 5916369647747105942
+    m_SerializedTextureGuid:
+      m_GuidLow: 16125465454237941163
+      m_GuidHigh: 14302175617613317432
+    m_Size: {x: 0.062, y: 0.086085215}
+    m_SpecifySize: 1
+    m_Name: Arcanine
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5687892161677558649
+      m_GuidHigh: 2232837480582318765
+    m_SerializedTextureGuid:
+      m_GuidLow: 13903159373865696150
+      m_GuidHigh: 17276793156425305883
+    m_Size: {x: 0.062, y: 0.086025}
+    m_SpecifySize: 1
+    m_Name: Spheal
+    m_Texture: {fileID: 0}

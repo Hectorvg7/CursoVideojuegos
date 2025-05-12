@@ -36,6 +36,8 @@ public class UnitsController : MonoBehaviour
     {
       Instance = this;
       gridSystem = LevelGrid.Instance.gridSystem;
+      GetUnitsList();
+      TurnSystem.Instance.OnTurnChanged += TurnSystem_OnTurnChanged;
     }
 
 
@@ -143,7 +145,7 @@ public class UnitsController : MonoBehaviour
                 unitsList.Add(unidad);
             }
         }
-
+        
         return unitsList;
     }
 
@@ -163,6 +165,29 @@ public class UnitsController : MonoBehaviour
         }
 
         return enemyUnitsList;
+    }
+
+    // Método para obtener la unidad más cercana
+    public Unit GetClosestPlayerUnitTo(Unit enemyUnit)
+    {
+        Unit closestUnit = null;
+        float closestDistance = float.MaxValue; // Inicializamos con un valor muy alto
+
+        // Comprobamos todas las unidades aliadas
+        foreach (Unit playerUnit in unitsList)
+        {
+            if (playerUnit == null) // Verificamos si la unidad es nula o ha muerto
+            continue;
+
+            float distance = Vector3.Distance(enemyUnit.transform.position, playerUnit.transform.position);
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestUnit = playerUnit;
+            }
+        }
+
+        return closestUnit;
     }
 
     public void PintarCasillas()
@@ -221,6 +246,11 @@ public class UnitsController : MonoBehaviour
     private void ActionButton_OnActionSelected(object sender, EventArgs e)
     {
         PintarCasillas();
+    }
+
+    private void TurnSystem_OnTurnChanged(object sender, EventArgs e)
+    {
+        DeselectUnit();
     }
 
     public void BorrarQuads()

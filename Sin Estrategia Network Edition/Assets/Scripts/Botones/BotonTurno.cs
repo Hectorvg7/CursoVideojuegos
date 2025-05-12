@@ -48,7 +48,7 @@ public class BotonTurno : MonoBehaviour
 
     public void AcabarTurno()
     {
-        TurnSystem.Instance.NextTurn(); // Ahora delegamos al TurnSystem
+        TurnSystem.Instance.NextTurnServerRpc(); // Ahora delegamos al TurnSystem
     }
 
     private void OnDestroy()

@@ -92,12 +92,22 @@ public class MoveAction : BaseAction
     {
         List<GridPosition> validPositions = LevelGrid.Instance.GetValidActionsGridPositionsList();
         EnemyAIAction bestAction = null;
+        int score = 0;
+
+        // Obtén la posición del jugador más cercano
+        Vector3 playerPosition = UnitsController.Instance.GetClosestPlayerUnitTo(unit).transform.position;
 
         foreach (GridPosition targetPosition in validPositions)
         {
-            int score = -Mathf.RoundToInt(Vector3.Distance(
-                LevelGrid.Instance.GetWorldPosition(targetPosition), Vector3.zero));
-                // *FALTA IMPLEMENTAR* PlayerUnitManager.Instance.GetClosestPlayerUnit().transform.position));
+            // Comprobamos si la casilla está dentro del rango de 3 casillas (distancia de Manhattan)
+            int distance = Mathf.Abs(targetPosition.x - unit.GetGridPosition().x) + Mathf.Abs(targetPosition.z - unit.GetGridPosition().z);
+            
+            if (distance > 3) // Si está fuera del rango de 3 casillas, no la consideramos
+            {
+                continue;
+            }
+
+            score = -Mathf.RoundToInt(Vector3.Distance(LevelGrid.Instance.GetWorldPosition(targetPosition), playerPosition));;
 
             if (bestAction == null || score > bestAction.actionValue)
             {

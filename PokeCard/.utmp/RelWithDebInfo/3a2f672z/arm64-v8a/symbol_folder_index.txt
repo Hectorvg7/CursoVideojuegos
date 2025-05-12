@@ -1,0 +1,1 @@
+/home/ciclost/Documentos/GitHub/CursoVideojuegos/PokeCard/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/3a2f672z/obj/arm64-v8a

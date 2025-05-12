@@ -1,13 +1,14 @@
 using System;
+using Unity.Netcode;
 using UnityEngine;
 
-public class TurnSystem : MonoBehaviour
+public class TurnSystem : NetworkBehaviour
 {
     public static TurnSystem Instance { get; private set; }
 
     public event EventHandler OnTurnChanged;
 
-    private bool isPlayerTurn = true;
+    NetworkVariable<bool> isPlayerTurn = new NetworkVariable<bool>(true);
     private int turnNumber = 1;
 
     private void Awake()
@@ -21,30 +22,43 @@ public class TurnSystem : MonoBehaviour
         Instance = this;
     }
 
-    public void NextTurn()
+    [Rpc(SendTo.Server)]
+    public void NextTurnServerRpc()
     {
-        isPlayerTurn = !isPlayerTurn;
+        isPlayerTurn.Value = !isPlayerTurn.Value;
 
-        if (isPlayerTurn)
+        if (isPlayerTurn.Value)
         {
             turnNumber++;
         }
 
-        OnTurnChanged?.Invoke(this, EventArgs.Empty);
+        // Notificar a todos los clientes que el turno ha cambiado
+        OnTurnChangedClientRpc(isPlayerTurn.Value);
+        
+        OnTurnChanged?.Invoke(this, EventArgs.Empty); 
     }
+
+    // Actualiza el estado del turno en todos los clientes
+    [Rpc(SendTo.NotServer)]
+    private void OnTurnChangedClientRpc(bool playerTurn)
+    {
+        isPlayerTurn.Value = playerTurn;
+    } 
 
     public bool IsPlayerTurn()
     {
-        return isPlayerTurn;
+        return isPlayerTurn.Value;
     }
 
     public bool IsEnemyTurn()
     {
-        return !isPlayerTurn;
+        return !isPlayerTurn.Value;
     }
 
     public int GetTurnNumber()
     {
         return turnNumber;
     }
+
+
 }
