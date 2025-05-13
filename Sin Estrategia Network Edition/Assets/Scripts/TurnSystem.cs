@@ -8,8 +8,8 @@ public class TurnSystem : NetworkBehaviour
 
     public event EventHandler OnTurnChanged;
 
-    NetworkVariable<bool> isPlayerTurn = new NetworkVariable<bool>(true);
-    private int turnNumber = 1;
+    NetworkVariable<bool> isPlayerTurn = new NetworkVariable<bool>(true, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+    private NetworkVariable<int> turnNumber = new NetworkVariable<int>(1, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
 
     private void Awake()
     {
@@ -22,28 +22,32 @@ public class TurnSystem : NetworkBehaviour
         Instance = this;
     }
 
-    [Rpc(SendTo.Server)]
+    private void OnEnable()
+    {
+        isPlayerTurn.OnValueChanged += OnTurnChangedCallback;
+    }
+
+    private void OnDisable()
+    {
+        isPlayerTurn.OnValueChanged -= OnTurnChangedCallback;
+    }
+
+    private void OnTurnChangedCallback(bool previousValue, bool newValue)
+    {
+        OnTurnChanged?.Invoke(this, EventArgs.Empty);
+    }
+    
+
+    [ServerRpc(RequireOwnership = false)]
     public void NextTurnServerRpc()
     {
         isPlayerTurn.Value = !isPlayerTurn.Value;
-
-        if (isPlayerTurn.Value)
-        {
-            turnNumber++;
-        }
-
-        // Notificar a todos los clientes que el turno ha cambiado
-        OnTurnChangedClientRpc(isPlayerTurn.Value);
         
-        OnTurnChanged?.Invoke(this, EventArgs.Empty); 
+        if (!isPlayerTurn.Value)
+        {
+            turnNumber.Value++;
+        }
     }
-
-    // Actualiza el estado del turno en todos los clientes
-    [Rpc(SendTo.NotServer)]
-    private void OnTurnChangedClientRpc(bool playerTurn)
-    {
-        isPlayerTurn.Value = playerTurn;
-    } 
 
     public bool IsPlayerTurn()
     {
@@ -57,8 +61,6 @@ public class TurnSystem : NetworkBehaviour
 
     public int GetTurnNumber()
     {
-        return turnNumber;
+        return turnNumber.Value;
     }
-
-
 }

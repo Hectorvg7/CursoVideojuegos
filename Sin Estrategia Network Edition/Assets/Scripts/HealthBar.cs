@@ -1,15 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthBar : MonoBehaviour
+public class HealthBar : NetworkBehaviour
 {
     private Image healthBarImage;
     private TextMeshProUGUI healthBarText;
-    public float maxHealth = 100f;  // Salud máxima de la unidad
-    private float currentHealth;  // Salud actual
 
     public Unit unit;
     public Vector3 offset = new Vector3(0,2,0);
@@ -19,10 +18,26 @@ public class HealthBar : MonoBehaviour
     public void Initialize(Unit owningUnit)
     {
         unit = owningUnit;
-        currentHealth = maxHealth;
         healthBarImage = transform.GetComponent<Image>();
         healthBarText = GetComponentInChildren<TextMeshProUGUI>();
-        UpdateHealthBar();
+
+        UpdateHealthBar(unit.currentHealth.Value);
+
+        // Suscribirse al cambio de vida
+        unit.currentHealth.OnValueChanged += OnHealthChanged;
+    }
+
+    private void OnDestroy()
+    {
+        if (unit != null)
+        {
+            unit.currentHealth.OnValueChanged -= OnHealthChanged;
+        }
+    }
+
+    private void OnHealthChanged(int previousValue, int newValue)
+    {
+        UpdateHealthBar(newValue);
     }
 
     void Update()
@@ -34,27 +49,11 @@ public class HealthBar : MonoBehaviour
     }
 
 
-    // Método para aplicar daño
-    public void TakeDamage(float damage)
-    {
-        currentHealth -= damage;
-        if (currentHealth < 0) currentHealth = 0;
-        UpdateHealthBar();
-    }
-
-    // Método para curar
-    public void Heal(float healAmount)
-    {
-        currentHealth += healAmount;
-        if (currentHealth > maxHealth) currentHealth = maxHealth;
-        UpdateHealthBar();
-    }
-
     // Método para actualizar la barra de salud
-    private void UpdateHealthBar()
+    private void UpdateHealthBar(int currentHealth)
     {
         // Calculamos la proporción de la salud actual en relación a la salud máxima
-        float healthPercentage = currentHealth / maxHealth;
+        float healthPercentage = currentHealth / unit.maxHealth;
 
         // Actualizamos el valor de la barra de salud
         healthBarImage.fillAmount = healthPercentage;

@@ -1,14 +1,16 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Unit : MonoBehaviour
+public class Unit : NetworkBehaviour
 {
     public int maxPointsPerTurn = 10;
     public int actionPoints;
-    public int health;
+    public NetworkVariable<int> currentHealth = new NetworkVariable<int>(100, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+    public int maxHealth = 100;
     public GridPosition gridPosition;
     public BaseAction[] availableActions;
     public GameObject quads;
@@ -143,10 +145,15 @@ public class Unit : MonoBehaviour
         onComplete?.Invoke(); // Llama a la acción una vez terminada la rotación
 }
 
-    public void DisminuirVida(int damageAmount)
+
+
+    public void TakeDamage(int damageAmount)
     {
+        if (!IsServer) return;
+
         healthSystem.Damage(damageAmount);
-        healthBarActions.TakeDamage(damageAmount);
+        currentHealth.Value -= damageAmount;
+        if (currentHealth.Value < 0) currentHealth.Value = 0;
     }
 
     private void HealthSystem_OnDamage(object sender, EventArgs e)

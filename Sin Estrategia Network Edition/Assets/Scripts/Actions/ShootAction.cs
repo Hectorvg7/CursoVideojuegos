@@ -70,7 +70,7 @@ public class ShootAction : BaseAction
         bullet.SetTarget(targetUnit.transform.position);
 
         unit.actionPoints -= GetActionPointsCost();
-        targetUnit.DisminuirVida(fireDamage);
+        targetUnit.TakeDamage(fireDamage);
     }
 
     public override EnemyAIAction GetBestEnemyAIAction()
