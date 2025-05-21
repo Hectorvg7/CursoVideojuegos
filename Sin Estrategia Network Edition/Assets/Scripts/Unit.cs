@@ -165,15 +165,37 @@ public class Unit : NetworkBehaviour
     {
         LevelGrid.Instance.RemoveUnitAtGridPosition(this, gridPosition);
 
-        // Instanciar el ragdoll correspondiente según la facción
+          // Instanciar el ragdoll solo desde el servidor
+        if (IsServer) // Aseguramos que solo el servidor instancie el ragdoll
+        {
+            InstantiateRagdollClientRpc(transform.position, transform.rotation);
+        }
+
+
+        StartCoroutine(DestroyUnitAfterRpc());
+    }
+
+    [ClientRpc]
+    private void InstantiateRagdollClientRpc(Vector3 position, Quaternion rotation)
+    {
         GameObject ragdollPrefab = isEnemy ? ragdollEnemyPrefab : ragdollAllyPrefab;
         if (ragdollPrefab != null)
         {
-            Instantiate(ragdollPrefab, transform.position, transform.rotation);
+            Instantiate(ragdollPrefab, position, rotation);
         }
+    }
+
+
+    private IEnumerator DestroyUnitAfterRpc()
+    {
+        // Espera un frame para asegurarse de que el RPC se haya enviado
+        yield return new WaitForSeconds(0.01f);
 
         // Destruir la unidad
-        Destroy(gameObject);
+        OnNetworkDespawn(); // Desespawnea la unidad en la red
+        Destroy(gameObject); // Destruye el GameObject
+
+        // Actualizar las listas de unidades
         UnitsController.Instance.GetUnitsList();
         UnitsController.Instance.GetEnemyUnitsList();
     }

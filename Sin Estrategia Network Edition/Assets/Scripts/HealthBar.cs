@@ -48,12 +48,21 @@ public class HealthBar : NetworkBehaviour
         }
     }
 
+    [ClientRpc]
+    public void HideHealthBarClientRpc()
+    {
+        // Desactivar o destruir la barra de vida en el cliente
+        healthBarImage.gameObject.SetActive(false);
+        healthBarText.gameObject.SetActive(false);
+        Debug.Log("Se han borrado las barras de vida.");
+    }
+
 
     // Método para actualizar la barra de salud
     private void UpdateHealthBar(int currentHealth)
     {
         // Calculamos la proporción de la salud actual en relación a la salud máxima
-        float healthPercentage = currentHealth / unit.maxHealth;
+        float healthPercentage = (float)currentHealth / unit.maxHealth;
 
         // Actualizamos el valor de la barra de salud
         healthBarImage.fillAmount = healthPercentage;
@@ -62,6 +71,12 @@ public class HealthBar : NetworkBehaviour
         if (currentHealth <= 0)
         {
             healthBarText.text = "";
+
+            if (IsServer)
+            {
+                HideHealthBarClientRpc();
+                unit.OnNetworkDespawn();
+            }
         }
     }
 }
