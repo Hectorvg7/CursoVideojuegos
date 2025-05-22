@@ -19,7 +19,7 @@ public class TextoPuntos : MonoBehaviour
     {
       if (unitsController.selectedUnit != null)
       {
-        puntosUnit = unitsController.selectedUnit.actionPoints;
+        puntosUnit = unitsController.selectedUnit.actionPoints.Value;
         textoPuntos.text = "Action Points: " + puntosUnit;
       }
       else

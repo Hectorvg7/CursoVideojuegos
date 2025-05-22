@@ -300,6 +300,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8498915379147666752}
   - component: {fileID: 1586893807146005243}
+  - component: {fileID: 1439544616107166886}
   - component: {fileID: 7175926053855224574}
   - component: {fileID: 1656775709214887757}
   - component: {fileID: 5135845331976592983}
@@ -307,7 +308,6 @@ GameObject:
   - component: {fileID: 2401638826699707919}
   - component: {fileID: 8112966010942287220}
   - component: {fileID: 2431532240084349810}
-  - component: {fileID: 1439544616107166886}
   - component: {fileID: 8133531387325477156}
   - component: {fileID: 6043550466300423107}
   - component: {fileID: -238711821210760728}
@@ -357,6 +357,31 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1439544616107166886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1477909114877994926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 516221154
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!114 &7175926053855224574
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -369,9 +394,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8de16a0f4ce30473ab65ab33158300f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   maxPointsPerTurn: 10
   actionPoints: 1
-  health: 0
+  currentHealth:
+    m_InternalValue: 100
+  maxHealth: 100
   availableActions: []
   quads: {fileID: 4484935497968842691}
   healthBar: {fileID: 8560390143429087468, guid: a9d6d1a4cc5efd730b6219b13a990d37,
@@ -476,32 +504,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe28ad0354b1257a2b0c4021976460b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
---- !u!114 &1439544616107166886
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1477909114877994926}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 516221154
-  InScenePlacedSourceGlobalObjectIdHash: 0
-  DeferredDespawnTick: 0
-  Ownership: 1
-  AlwaysReplicateAsRoot: 0
-  SynchronizeTransform: 1
-  ActiveSceneSynchronization: 0
-  SceneMigrationSynchronization: 1
-  SpawnWithObservers: 1
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
-  SyncOwnerTransformWhenParented: 1
-  AllowOwnerToParent: 0
+  ShowTopMostFoldoutHeaderGroup: 1
+  healthMax: 100
 --- !u!114 &8133531387325477156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -582,7 +586,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fcb7f75814c95ad98ec8154469ad0b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  ShowTopMostFoldoutHeaderGroup: 1
   unit: {fileID: 0}
   offset: {x: 0, y: 2, z: 0}
 --- !u!1 &2394683572080289638

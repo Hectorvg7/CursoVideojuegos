@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Bullet : NetworkBehaviour
 {
     private Vector3 targetPosition;
     [SerializeField] private float speed = 20f;
@@ -33,8 +34,18 @@ public class Bullet : MonoBehaviour
         if (Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z),
                              new Vector3(targetPosition.x, 0, targetPosition.z)) < 0.2f)
         {
-            Destroy(gameObject);
-            GameObject.Instantiate(explosionParticle, transform.position, Quaternion.identity);
+            if (IsServer)
+            {
+                Destroy(gameObject);
+                SpawnExplosionServerRpc(transform.position);
+            }
         }
+    }
+    
+    [ServerRpc]
+    void SpawnExplosionServerRpc(Vector3 position)
+    {
+        GameObject explosion = Instantiate(explosionParticle, position, Quaternion.identity);
+        explosion.GetComponent<NetworkObject>().Spawn();
     }
 }

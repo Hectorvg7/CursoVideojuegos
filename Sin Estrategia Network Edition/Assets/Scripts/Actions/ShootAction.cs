@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 public class ShootAction : BaseAction
@@ -64,13 +65,20 @@ public class ShootAction : BaseAction
         if (targetUnit == null) return;
 
         Transform muzzleTransform = unit.GetRifleMuzzle();
-        GameObject bulletGO = GameObject.Instantiate(bulletPrefab, muzzleTransform.position, Quaternion.identity);
+        ShootServerRpc(muzzleTransform.position, targetUnit.transform.position);
 
-        Bullet bullet = bulletGO.GetComponent<Bullet>();
-        bullet.SetTarget(targetUnit.transform.position);
-
-        unit.actionPoints -= GetActionPointsCost();
+        unit.actionPoints.Value -= GetActionPointsCost();
         targetUnit.TakeDamage(fireDamage);
+    }
+
+    [ServerRpc]
+    public void ShootServerRpc(Vector3 spawnPosition, Vector3 targetPosition)
+    {
+        GameObject bullet = Instantiate(bulletPrefab, spawnPosition, Quaternion.identity);
+        var bulletNet = bullet.GetComponent<NetworkObject>();
+        bulletNet.Spawn(); // hace que la bala se vea en todos los clientes
+
+        bullet.GetComponent<Bullet>().SetTarget(targetPosition);
     }
 
     public override EnemyAIAction GetBestEnemyAIAction()

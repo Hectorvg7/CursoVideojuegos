@@ -8,7 +8,8 @@ using UnityEngine;
 public class Unit : NetworkBehaviour
 {
     public int maxPointsPerTurn = 10;
-    public int actionPoints;
+    public NetworkVariable<int> actionPoints = new NetworkVariable<int>(writePerm: NetworkVariableWritePermission.Server);
+
     public NetworkVariable<int> currentHealth = new NetworkVariable<int>(100, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
     public int maxHealth = 100;
     public GridPosition gridPosition;
@@ -36,7 +37,7 @@ public class Unit : NetworkBehaviour
     {
         availableActions = GetComponents<BaseAction>();
         animator = GetComponent<Animator>();
-        actionPoints = maxPointsPerTurn;
+        actionPoints.Value = maxPointsPerTurn;
         quads.SetActive(false);
         healthSystem = GetComponent<HealthSystem>();
         healthSystem.OnDamage += HealthSystem_OnDamage;
@@ -83,17 +84,20 @@ public class Unit : NetworkBehaviour
 
     public bool CanSpendPointsToTakeAction(BaseAction action)
     {
-        return actionPoints >= action.GetActionPointsCost();
+        return actionPoints.Value >= action.GetActionPointsCost();
     }
 
     public int GetActionPoints()
     {
-        return actionPoints;
+        return actionPoints.Value;
     }
 
     public void ResetActionPoints()
     {
-        actionPoints = maxPointsPerTurn;
+        if (IsServer)
+        {
+            actionPoints.Value = maxPointsPerTurn;
+        }
     }
 
      // Método para indicar si la unidad se está moviendo
@@ -189,7 +193,7 @@ public class Unit : NetworkBehaviour
     private IEnumerator DestroyUnitAfterRpc()
     {
         // Espera un frame para asegurarse de que el RPC se haya enviado
-        yield return new WaitForSeconds(0.01f);
+        yield return new WaitForSeconds(0.05f);
 
         // Destruir la unidad
         OnNetworkDespawn(); // Desespawnea la unidad en la red

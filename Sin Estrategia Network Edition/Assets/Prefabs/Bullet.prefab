@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 8051039910164773599}
   - component: {fileID: 7569192039564585287}
   - component: {fileID: 3831429785214789295}
-  - component: {fileID: 3553078213968177840}
   - component: {fileID: 1341660046804140283}
+  - component: {fileID: 3553078213968177840}
   - component: {fileID: 625336544257568535}
   m_Layer: 0
   m_Name: Bullet
@@ -230,21 +230,6 @@ TrailRenderer:
   m_Autodestruct: 1
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
---- !u!114 &3553078213968177840
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7515479646241835634}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d30007dd5722759e84ca54b2eb45c3c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 10
-  explosionParticle: {fileID: 6319470278784768659, guid: 9b090f98aedace3d796ebfccccda58eb,
-    type: 3}
 --- !u!114 &1341660046804140283
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -270,6 +255,22 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
+--- !u!114 &3553078213968177840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7515479646241835634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d30007dd5722759e84ca54b2eb45c3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  speed: 10
+  explosionParticle: {fileID: 6319470278784768659, guid: 9b090f98aedace3d796ebfccccda58eb,
+    type: 3}
 --- !u!114 &625336544257568535
 MonoBehaviour:
   m_ObjectHideFlags: 0

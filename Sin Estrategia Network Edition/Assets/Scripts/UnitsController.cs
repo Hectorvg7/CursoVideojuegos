@@ -297,7 +297,7 @@ public class UnitsController : MonoBehaviour
     {
         if (unit != null)
         {
-            unit.actionPoints = unit.maxPointsPerTurn;
+            unit.actionPoints.Value = unit.maxPointsPerTurn;
         }
     }
     
