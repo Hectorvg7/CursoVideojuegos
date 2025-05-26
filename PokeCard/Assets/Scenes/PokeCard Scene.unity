@@ -119,6 +119,57 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &62697517
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 62697519}
+  - component: {fileID: 62697518}
+  m_Layer: 0
+  m_Name: AR Image Controller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &62697518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 62697517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29fd289510fbf32a1842308789fbc7f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trackedImageManager: {fileID: 826456053}
+  namedPrefabs:
+  - name: Spheal
+    prefab: {fileID: 13385851015495545, guid: ed924284902777a419d1116012881ad2, type: 3}
+  - name: Arcanine
+    prefab: {fileID: 7562780356304276991, guid: 36a20af6224466b089a2c009bef03c0e,
+      type: 3}
+--- !u!4 &62697519
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 62697517}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &113207240
 GameObject:
   m_ObjectHideFlags: 0
@@ -355,8 +406,7 @@ MonoBehaviour:
   m_SerializedLibrary: {fileID: 11400000, guid: 78cf547fd760e9d1d8a102fc8ec600cd,
     type: 2}
   m_MaxNumberOfMovingImages: 0
-  m_TrackedImagePrefab: {fileID: 7562780356304276991, guid: 36a20af6224466b089a2c009bef03c0e,
-    type: 3}
+  m_TrackedImagePrefab: {fileID: 0}
 --- !u!1 &1258224673
 GameObject:
   m_ObjectHideFlags: 0
@@ -525,6 +575,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spheal
       objectReference: {fileID: 0}
+    - target: {fileID: 13385851015495545, guid: ed924284902777a419d1116012881ad2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1378945648978759433, guid: ed924284902777a419d1116012881ad2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -573,6 +628,46 @@ PrefabInstance:
     - target: {fileID: 1378945648978759433, guid: ed924284902777a419d1116012881ad2,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5022657679739219412, guid: ed924284902777a419d1116012881ad2,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.007
+      objectReference: {fileID: 0}
+    - target: {fileID: 5022657679739219412, guid: ed924284902777a419d1116012881ad2,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.007
+      objectReference: {fileID: 0}
+    - target: {fileID: 5022657679739219412, guid: ed924284902777a419d1116012881ad2,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.007
+      objectReference: {fileID: 0}
+    - target: {fileID: 5022657679739219412, guid: ed924284902777a419d1116012881ad2,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5022657679739219412, guid: ed924284902777a419d1116012881ad2,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5022657679739219412, guid: ed924284902777a419d1116012881ad2,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5022657679739219412, guid: ed924284902777a419d1116012881ad2,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5022657679739219412, guid: ed924284902777a419d1116012881ad2,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -643,6 +738,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Arcanine
       objectReference: {fileID: 0}
+    - target: {fileID: 7562780356304276991, guid: 36a20af6224466b089a2c009bef03c0e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -658,3 +758,4 @@ SceneRoots:
   - {fileID: 826456051}
   - {fileID: 4542656065602643117}
   - {fileID: 3161189796334656413}
+  - {fileID: 62697519}
