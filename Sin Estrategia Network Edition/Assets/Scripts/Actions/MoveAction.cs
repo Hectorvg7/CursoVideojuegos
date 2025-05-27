@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.AI;
@@ -60,6 +61,10 @@ public class MoveAction : BaseAction
 
         // Una vez que el agente ha llegado a su destino, detener la animación de movimiento y volver a pintar las casillas.
         unit.StopMoving();
+
+        // 🔔 Llamamos a los clientes para que repinten
+        RequestPintarCasillasClientRpc();
+
         UnitsController.Instance.PintarCasillas();
 
         // Llamar al callback cuando la acción se complete
@@ -125,9 +130,30 @@ public class MoveAction : BaseAction
     }
 
     [ServerRpc(RequireOwnership = false)]
-    public void RequestMoveActionServerRpc(GridPosition targetGridPosition)
+    public void RequestMoveActionServerRpc(GridPosition targetGridPosition, ServerRpcParams rpcParams = default)
     {
         TakeAction(targetGridPosition, () => { }); // Acción del Host
+    }
+
+    [ClientRpc]
+    private void RequestPintarCasillasClientRpc()
+    {
+        if (IsOwner)
+        {
+            UnitsController.Instance.PintarCasillas();
+        }
+    }
+
+    public void RequestMove(GridPosition gridPosition)
+    {
+        if (IsClient)
+        {
+            RequestMoveActionServerRpc(gridPosition);
+        }
+        else if (IsServer)
+        {
+            TakeAction(gridPosition, () => { });
+        }
     }
     
     [ClientRpc]

@@ -1,6 +1,7 @@
 using System;
+using Unity.Netcode;
 
-public struct GridPosition : IEquatable<GridPosition>
+public struct GridPosition : INetworkSerializable
 {
     public int x;
     public int z;
@@ -9,6 +10,12 @@ public struct GridPosition : IEquatable<GridPosition>
     {
         this.x = x;
         this.z = z;
+    }
+
+    public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
+    {
+        serializer.SerializeValue(ref x);
+        serializer.SerializeValue(ref z);
     }
 
     public override string ToString()

@@ -1,9 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
-public abstract class BaseAction : MonoBehaviour
+public abstract class BaseAction : NetworkBehaviour
 {
     protected Unit unit;
     protected bool isActive;

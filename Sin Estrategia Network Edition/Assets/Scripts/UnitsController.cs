@@ -72,7 +72,14 @@ public class UnitsController : MonoBehaviour
                 {
                     if (selectedUnit.CanSpendPointsToTakeAction(selectedAction))
                     {
-                        selectedAction.TakeAction(gridPosition, ClearBusy);
+                        if (selectedAction is MoveAction moveAction)
+                        {
+                            moveAction.RequestMove(gridPosition);
+                        }
+                        else
+                        {
+                            selectedAction.TakeAction(gridPosition, ClearBusy);
+                        }
                     }
                     else 
                     {
