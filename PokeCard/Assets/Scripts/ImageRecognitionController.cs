@@ -39,10 +39,7 @@ public class ImageRecognitionController : MonoBehaviour
     private void OnTrackedImagesChanged(ARTrackablesChangedEventArgs<ARTrackedImage> args)
     {
         foreach (var trackedImage in args.removed)
-            if (prefabDictionary.TryGetValue(trackedImage.Value.name, out GameObject obj))
-            {
-                obj.SetActive(false);
-            }
+            UpdateImage(trackedImage.Value);
         foreach (var trackedImage in args.added)
             UpdateImage(trackedImage);
         foreach (var trackedImage in args.updated)
@@ -60,9 +57,18 @@ public class ImageRecognitionController : MonoBehaviour
 
         if (prefabDictionary.TryGetValue(imageName, out GameObject obj))
         {
-            obj.transform.position = trackedImage.transform.position;
-            obj.transform.rotation = trackedImage.transform.rotation;
-            obj.SetActive(true);
+            if (trackedImage.trackingState == UnityEngine.XR.ARSubsystems.TrackingState.Tracking)
+            {
+                // Actualizar posición y rotación solo si está en tracking
+                obj.transform.position = trackedImage.transform.position;
+                obj.transform.rotation = trackedImage.transform.rotation;
+                obj.SetActive(true);
+            }
+            else
+            {
+                // Desactivar objeto si no está en tracking
+                obj.SetActive(false);
+            }
         }
     }
 }

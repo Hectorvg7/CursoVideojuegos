@@ -111,4 +111,22 @@ public class ShootAction : BaseAction
         return bestAction;
     }
 
+    public void RequestShoot(GridPosition gridPosition)
+    {
+        if (IsClient)
+        {
+            RequestShootActionServerRpc(gridPosition);
+        }
+        else if (IsServer)
+        {
+            TakeAction(gridPosition, () => { });
+        }
+    }
+    
+    [ServerRpc(RequireOwnership = false)]
+    public void RequestShootActionServerRpc(GridPosition targetGridPosition, ServerRpcParams rpcParams = default)
+    {
+        TakeAction(targetGridPosition, () => { }); // Acción del Host
+    }
+
 }

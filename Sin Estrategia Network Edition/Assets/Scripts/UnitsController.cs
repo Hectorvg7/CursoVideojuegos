@@ -76,6 +76,10 @@ public class UnitsController : MonoBehaviour
                         {
                             moveAction.RequestMove(gridPosition);
                         }
+                        else if (selectedAction is ShootAction shootAction)
+                        {
+                            shootAction.RequestShoot(gridPosition);
+                        }
                         else
                         {
                             selectedAction.TakeAction(gridPosition, ClearBusy);
