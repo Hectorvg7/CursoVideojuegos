@@ -1,0 +1,2 @@
+C:\Users\Usuario\OneDrive\Documentos\GitHub\CursoVideojuegos\PokeCard\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\cpp\CMakeLists.txt
+C:\Users\Usuario\OneDrive\Documentos\GitHub\CursoVideojuegos\PokeCard\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\src\main\cpp\GameActivity\CMakeLists.txt

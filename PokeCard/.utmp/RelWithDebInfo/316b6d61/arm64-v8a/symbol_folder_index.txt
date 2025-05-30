@@ -1,0 +1,1 @@
+C:\Users\Usuario\OneDrive\Documentos\GitHub\CursoVideojuegos\PokeCard\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\cxx\RelWithDebInfo\316b6d61\obj\arm64-v8a
